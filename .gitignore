@@ -1,0 +1,23 @@
+.env
+.env.*
+
+# Dependencies
+/vendor/
+
+# Editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Tests / coverage
+coverage/
+.phpunit.result.cache
+
+# Uploaded files (if applicable)
+public/uploads/

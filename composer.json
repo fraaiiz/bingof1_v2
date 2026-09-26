@@ -1,0 +1,11 @@
+{
+    "name": "florian/projet_dwwm",
+    "description": "BingoF1 v2",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {}
+}
