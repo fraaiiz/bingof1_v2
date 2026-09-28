@@ -1,0 +1,70 @@
+/*CSS Les Bingos*/
+.bingo-list-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bingo-list-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.bingo-users-column,
+.bingo-preview-column {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.bingo-user {
+    background: rgba(52, 58, 64, 0.88);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 18px 16px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.bingo-user:hover,
+.bingo-user:focus {
+    transform: translateY(-1px);
+    border-color: rgba(255,255,255,0.4);
+}
+
+.bingo-preview-card {
+    background: rgba(52, 58, 64, 0.88);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 22px;
+}
+
+.bingo-preview-card h2 {
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.mini-bingo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.2);
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+}
+
+.mini-bingo-cell {
+    min-height: 68px;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.02);
+    font-weight: 700;
+    color: #fff;
+}

@@ -165,7 +165,6 @@ nav li.menu-item > button {
     width: 100%;
 }
 
-
 main {
     flex: 1;
     margin: 10px 50px;
@@ -183,171 +182,11 @@ main > * {
     width: 100%;
 }
 
+/*CSS Footer*/
 footer {
     text-align: center;
     padding: 20px;
     background-color: #970008;
     margin: 0 50px 20px;
     border-radius: 15px;
-}
-
-/* CSS Home */
-.home-page {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.home-header h1, .home-header h2 {
-    text-align: center;
-    margin: 10px 0;
-}
-
-.home-content {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    flex: 1;
-    gap: 20px;
-}
-
-.home-card-left,
-.home-card-right {
-    flex: 1;
-    min-height: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 5px;
-    background-color: #343a40;
-    border: 1px solid white;
-}
-
-.chat-box {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0px 5px;
-}
-
-.chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1px;
-    border: 1px solid black;
-    background-color: white;
-    text-align: left;
-}
-.message {
-    padding: 5px;
-    margin: 1px 0;
-    color: #000;
-}
-.chat-form {
-    width: 100%;
-    display: flex;
-    gap: 5px;
-}
-
-.chat-form input[type="text"] {
-    flex: 1;
-    padding: 1px;
-    height: 30px;
-    border: 1px solid black;
-}
-
-/* CSS Infos */
-.infos-content {
-    display: flex;
-    gap: 20px;
-    align-items: stretch;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-.infos-ecurie {
-    flex: 0 0 40%;
-    background-color: #343a40;
-    border: 1px solid white;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.ecurie-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    text-align: left;
-}
-
-.ecurie-logo {
-    width: 200px;
-    height: auto;
-    object-fit: contain;
-    flex-shrink: 0;
-}
-
-.ecurie-title-block {
-    flex: 1;
-}
-
-.ecurie-title-block h2 {
-    margin: 0;
-    text-align: right;
-    font-size: 1.8rem;
-}
-
-.ecurie-details {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    text-align: left;
-    font-size: 1.5rem;
-}
-
-.ecurie-details p {
-    margin: 0;
-}
-
-.infos-pilotes {
-    flex: 0 0 60%;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    padding-right: 20px;
-}
-
-.pilote-grid {
-    display: flex;
-    width: 100%;
-    height: 90%;
-}
-
-.card-pilote {
-    flex: 1 1 50%;
-    background-color: #343a40;
-    border: 1px solid white;
-    padding: 5px;
-    box-sizing: border-box;
-    font-size: 1.5rem;
-}
-
-.card-pilote img {
-    max-height: 300px;
-    object-fit: contain;
-}
-
-.reserve {
-    width: 100%;
-    height: 10%;
-    background-color: #343a40;
-    border: 1px solid white;
-    box-sizing: border-box;
 }

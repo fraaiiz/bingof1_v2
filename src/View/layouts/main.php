@@ -8,6 +8,7 @@
     <title><?= htmlspecialchars($title ?? 'BingoF1') ?></title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/fonts/fonts.css">
+    <link rel="stylesheet" href="/assets/css/pages/<?= htmlspecialchars($page ?? '') ?>.css">
 
 <body>
     <header>

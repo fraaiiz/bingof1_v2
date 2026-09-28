@@ -1,0 +1,93 @@
+/* CSS Infos */
+.infos-content {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.infos-ecurie {
+    flex: 0 0 40%;
+    background-color: #343a40;
+    border: 1px solid white;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ecurie-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+}
+
+.ecurie-logo {
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.ecurie-title-block {
+    flex: 1;
+}
+
+.ecurie-title-block h2 {
+    margin: 0;
+    text-align: right;
+    font-size: 1.8rem;
+}
+
+.ecurie-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
+    font-size: 1.5rem;
+}
+
+.ecurie-details p {
+    margin: 0;
+}
+
+.infos-pilotes {
+    flex: 0 0 60%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-right: 20px;
+}
+
+.pilote-grid {
+    display: flex;
+    width: 100%;
+    height: 90%;
+}
+
+.card-pilote {
+    flex: 1 1 50%;
+    background-color: #343a40;
+    border: 1px solid white;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+}
+
+.card-pilote img {
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.reserve {
+    width: 100%;
+    height: 10%;
+    background-color: #343a40;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
