@@ -2,22 +2,59 @@
 
 namespace App\Controller;
 
+use App\Database\Database;
 use App\View\ViewRenderer;
 
 class CalendrierController {
 
     public function index(string $annee) {
-        
+        $database = new Database();
+        $pdo = $database->getConnection();
+        $stmt = $pdo->prepare(
+            'SELECT courses.*
+            FROM courses
+            INNER JOIN saisons ON saisons.id = courses.id_saison
+            WHERE saisons.annee = :annee
+            ORDER BY courses.num_manche ASC'
+        );
+        $stmt->execute([':annee' => $annee]);
+        $courses = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        $today = new \DateTimeImmutable('today');
+        $selectedCourseIndex = max(count($courses) - 1, 0);
+        $nextCourseIndex = null;
+
+        foreach ($courses as $index => $course) {
+            $startDate = (new \DateTimeImmutable($course['date_fp1']))->setTime(0, 0);
+            $endDate = (new \DateTimeImmutable($course['date_course']))->setTime(23, 59, 59);
+
+            if ($today >= $startDate && $today <= $endDate) {
+                $selectedCourseIndex = $index;
+                $nextCourseIndex = null;
+                break;
+            }
+
+            if ($nextCourseIndex === null && $startDate > $today) {
+                $nextCourseIndex = $index;
+            }
+        }
+
+        if ($nextCourseIndex !== null) {
+            $selectedCourseIndex = $nextCourseIndex;
+        }
+
         $viewRenderer = new ViewRenderer();
         $viewRenderer->render('View/pages/calendrier', [
             'title' => 'BingoF1 - Calendrier ' . $annee,
-            'annee' => $annee
+            'annee' => $annee,
+            'courses' => $courses,
+            'selectedCourseIndex' => $selectedCourseIndex
         ]);
     }
 
     public function redirectToCurrentSeason() {
         $currentYear = date('Y');
-        header("Location: /saisons/2026/calendrier");
+        header("Location: /saisons/$currentYear/calendrier");
         exit();
     }
 }

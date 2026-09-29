@@ -13,11 +13,16 @@
 .calendrier-caroussel {
     display: grid;
     grid-template-columns: 56px minmax(0, 1fr) 56px;
+    grid-template-rows: minmax(0, 1fr) auto;
     align-items: center;
     gap: 18px;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.calendrier-cards {
+    min-width: 0;
 }
 
 .calendrier-card {
@@ -27,6 +32,11 @@
     padding: 24px;
     box-shadow: 0 16px 30px rgba(0,0,0,0.22);
     overflow: hidden;
+    min-height: 600px;
+}
+
+.calendrier-card[hidden] {
+    display: none;
 }
 
 .circuit-content {
@@ -64,6 +74,11 @@
     line-height: 1.1;
 }
 
+.circuit-dates {
+    margin: 0;
+    color: rgba(255,255,255,0.85);
+}
+
 .circuit-country {
     margin: 0;
     font-size: 1.1rem;
@@ -81,15 +96,15 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    gap: 18px;
+    align-items: flex-start;
+    gap: 10px;
     padding-top: 14px;
     margin-top: 8px;
     border-top: 1px solid rgba(255,255,255,0.12);
     color: rgba(255,255,255,0.85);
     font-size: 0.92rem;
-    flex-wrap: nowrap;
-    white-space: nowrap;
+    flex-wrap: wrap;
+    white-space: normal;
 }
 
 .circuit-visual {
@@ -142,4 +157,47 @@
 .carousel-btn:focus {
     transform: scale(1.04);
     filter: brightness(1.08);
+}
+
+.carousel-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    box-shadow: none;
+}
+
+.carousel-position {
+    grid-column: 2;
+    margin: 0;
+    text-align: center;
+    color: rgba(255,255,255,0.75);
+}
+
+.calendrier-empty {
+    margin: 0 auto;
+    text-align: center;
+}
+
+@media (max-width: 760px) {
+    .calendrier-caroussel {
+        grid-template-columns: 42px minmax(0, 1fr) 42px;
+        gap: 8px;
+    }
+
+    .calendrier-card {
+        padding: 18px;
+    }
+
+    .circuit-content {
+        grid-template-columns: 1fr;
+    }
+
+    .circuit-visual {
+        min-height: 220px;
+    }
+
+    .carousel-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1.5rem;
+    }
 }

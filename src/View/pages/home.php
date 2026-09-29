@@ -1,7 +1,21 @@
 <div class="home-page">
     <div class="home-header">
-        <h1>Bienvenue sur BingoF1</h1>
-        <h2>Prochaine course: XXX dans 0j 0h 0m 0s</h2>
+        <?php if (!empty($course)): ?>
+            <h1 class='text-center'>Prochaine course :</h1>
+            <h2 class='text-center'><strong><?= htmlspecialchars($course['nom_circuit']) ?></strong> <span id='countdown'></span></h2>
+
+            <script>
+                window.countdownData = {
+                    start: <?= json_encode($course['date_fp1']) ?>,
+                    end: <?= json_encode($course['date_course']) ?>,
+                    status: <?= json_encode($status) ?>
+                };
+            </script>
+            <script src="/assets/js/countdown.js"></script>
+        <?php else: ?>
+            <p>Aucune course à venir.</p>
+        <?php endif; ?>
+        <br>
     </div>
 
     <div class="home-content">
@@ -22,9 +36,37 @@
                 </form>
             </div>
         </div>
+
         <div class="home-card-right">
-            <h3>Actualités</h3>
-            <p>Restez informé des dernières actualités de la F1, des pilotes et des équipes grâce à notre section dédiée.</p>
+            <div class="webhook-box">
+                <h3>Actualité</h3>
+                <div class="actus-scroll">
+                            <?php foreach ($actus as $a): ?>
+                                <a href="<?= htmlspecialchars($a['link']) ?>" target="_blank" rel="noopener noreferrer" class="actu-line">
+                                    <div class="actu-title"><?= htmlspecialchars($a['title']) ?></div>
+                                    <div class="actu-date"><?= $a['date'] ?></div>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+             </div>
+            <hr/>
+            <div class="predictions-box">
+                <h3>Prédictions</h3>
+                <div class="prediction-list">
+                    <div class="prediction-item">
+                        <span>Pole position</span>
+                        <strong>Max Verstappen</strong>
+                    </div>
+                    <div class="prediction-item">
+                        <span>Vainqueur</span>
+                        <strong>Charles Leclerc</strong>
+                    </div>
+                    <div class="prediction-item">
+                        <span>Meilleur tour</span>
+                        <strong>Lando Norris</strong>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
