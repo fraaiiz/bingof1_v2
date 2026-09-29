@@ -53,14 +53,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="results-buttons">
+                            <button class="results">Accéder aux résultats</button>
+                            <button class="edit">Éditer les résultats</button>
+                        </div>
                     </article>
                 <?php endforeach; ?>
             </div>
 
             <button type="button" class="carousel-btn carousel-btn-next" data-next aria-label="Course suivante"<?= $selectedCourseIndex === count($courses) - 1 ? ' disabled' : '' ?>>&gt;</button>
         </div>
+
         <script src="/assets/js/calendrier.js" defer></script>
     <?php else: ?>
-        <p class="calendrier-empty">Aucune course n'est enregistrée pour cette saison.</p>
+        <h1 class="calendrier-empty">Le calendrier n'est pas encore disponible pour cette saison.</h1>
     <?php endif; ?>
 </section>

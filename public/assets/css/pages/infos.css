@@ -4,52 +4,145 @@
     gap: 20px;
     align-items: stretch;
     width: 100%;
-    height: 100%;
+    min-height: 540px;
     box-sizing: border-box;
 }
 
-.infos-ecurie {
+.infos-ecuries {
     flex: 0 0 40%;
+    min-width: 0;
+    display: flex;
+}
+
+.infos-ecuries-cards {
+    flex: 1;
+    min-width: 0;
+}
+
+.infos-ecurie {
+    height: 100%;
+    padding: 24px;
     background-color: #343a40;
-    border: 1px solid white;
-    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
+}
+
+.infos-carousel-controls {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.infos-ecurie .carousel-btn {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(151, 0, 8, 0.9);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.infos-ecurie .carousel-btn:hover,
+.infos-ecurie .carousel-btn:focus {
+    transform: scale(1.04);
+    filter: brightness(1.08);
+}
+
+.infos-position {
+    margin: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.infos-ecurie,
+.card-pilote,
+.reserve {
+    background-color: #343a40;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-sizing: border-box;
 }
 
 .ecurie-header {
     display: flex;
     align-items: center;
-    gap: 15px;
-    text-align: left;
+    flex-direction: column;
+    gap: 18px;
+    text-align: center;
+}
+
+.ecurie-visuals {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.ecurie-logo-wrap {
+    width: 100%;
+    min-width: 0;
 }
 
 .ecurie-logo {
-    width: 200px;
-    height: auto;
+    display: block;
+    width: 100%;
+    height: 150px;
     object-fit: contain;
     flex-shrink: 0;
 }
 
-.ecurie-title-block {
-    flex: 1;
+.ecurie-car {
+    display: block;
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.team-logo-placeholder,
+.driver-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.75);
+    text-align: center;
+}
+
+.team-logo-placeholder[hidden],
+.driver-photo-placeholder[hidden] {
+    display: none;
+}
+
+.team-logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 150px;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 .ecurie-title-block h2 {
     margin: 0;
-    text-align: right;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    line-height: 1.2;
 }
 
 .ecurie-details {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    text-align: left;
-    font-size: 1.5rem;
+    gap: 12px;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .ecurie-details p {
@@ -57,37 +150,126 @@
 }
 
 .infos-pilotes {
-    flex: 0 0 60%;
+    flex: 1 1 60%;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
-    padding-right: 20px;
+    gap: 16px;
 }
 
 .pilote-grid {
-    display: flex;
-    width: 100%;
-    height: 90%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
 }
 
 .card-pilote {
-    flex: 1 1 50%;
-    background-color: #343a40;
-    border: 1px solid white;
-    padding: 5px;
-    box-sizing: border-box;
-    font-size: 1.5rem;
+    min-width: 0;
+    overflow: hidden;
 }
 
-.card-pilote img {
-    max-height: 300px;
+.driver-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.driver-photo img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
+.driver-photo-placeholder {
+    height: 100%;
+}
+
+.driver-details {
+    padding: 14px;
+    text-align: center;
+}
+
+.driver-details h2,
+.driver-details p {
+    margin: 0;
+}
+
+.driver-details h2 {
+    font-size: 1.4rem;
+    line-height: 1.3;
+}
+
+.driver-details p {
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
 .reserve {
-    width: 100%;
-    height: 10%;
-    background-color: #343a40;
-    border: 1px solid white;
-    box-sizing: border-box;
+    padding: 14px 18px;
+}
+
+.reserve h3,
+.reserve p {
+    margin: 0;
+}
+
+.reserve p {
+    margin-top: 6px;
+}
+
+.infos-empty {
+    margin: 0;
+    text-align: center;
+}
+
+@media (max-width: 760px) {
+    .infos-content {
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .infos-ecuries {
+        min-height: 0;
+        flex-basis: auto;
+    }
+
+    .infos-ecurie {
+        min-height: 0;
+    }
+
+    .pilote-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .driver-photo {
+        height: 190px;
+    }
+}
+
+@media (max-width: 440px) {
+    .infos-ecurie {
+        padding: 18px;
+    }
+
+    .infos-carousel-controls {
+        gap: 6px;
+        grid-template-columns: 36px minmax(0, 1fr) 36px;
+    }
+
+    .infos-ecurie .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.25rem;
+    }
+
+    .pilote-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .driver-photo {
+        height: 240px;
+    }
 }
