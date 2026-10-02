@@ -1,19 +1,19 @@
 const countdownElement = document.getElementById('countdown');
 const data = window.countdownData || {};
 const startDate = data.start ? new Date(data.start).getTime() : 0;
-const status = data.status || '';
+const raceStatus = data.status || '';
 
 function updateCountdown() {
     if (!countdownElement) return;
 
     const now = new Date().getTime();
 
-    if (status === 'en_cours') {
+    if (raceStatus === 'en_cours') {
         countdownElement.textContent = 'en cours';
         return;
     }
 
-    if (status === 'a_venir' && startDate) {
+    if (raceStatus === 'a_venir' && startDate) {
         const diff = startDate - now;
 
         if (diff <= 0) {

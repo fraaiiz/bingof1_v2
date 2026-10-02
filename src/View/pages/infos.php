@@ -86,5 +86,5 @@ $assetPath = static function ($path) {
     </div>
     <script src="/assets/js/infos.js" defer></script>
 <?php else: ?>
-    <p class="infos-empty">Aucune écurie n'est disponible pour la saison <?= htmlspecialchars((string) $annee, ENT_QUOTES, 'UTF-8') ?>.</p>
+    <p class="infos-empty">Les informations pour cette saison ne sont pas encore confirmées. <?= htmlspecialchars((string) $annee, ENT_QUOTES, 'UTF-8') ?>.</p>
 <?php endif; ?>

@@ -55,15 +55,24 @@
 .form-control {
     box-sizing: border-box;
     padding: 12px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
+    background: #fff;
+    color: #222;
     font-size: 1rem;
 }
 
 .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(34, 34, 34, 0.58);
+}
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:autofill {
+    -webkit-text-fill-color: #222;
+    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+    box-shadow: 0 0 0 1000px #fff inset;
 }
 
 .btn {
@@ -92,3 +101,23 @@
 .login-footer a:hover {
     text-decoration: underline;
 }
+
+.auth-error {
+    margin: 0;
+    padding: 10px 12px;
+    color: #ffe4e4;
+    background: rgba(151, 0, 8, 0.28);
+    border: 1px solid rgba(255, 150, 150, 0.55);
+    border-radius: 4px;
+}
+
+.form-control:focus-visible {
+    outline: 2px solid #f2c66d;
+    outline-offset: 2px;
+    border-color: #f2c66d;
+}
+
+.btn:hover {
+    background: #b80d17;
+}
+

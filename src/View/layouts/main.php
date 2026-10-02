@@ -6,9 +6,10 @@
     <meta name="author" content="Florian Teindas">
     <link rel="icon" href="/assets/images/favicon.ico"/>
     <title><?= htmlspecialchars($title ?? 'BingoF1') ?></title>
+    <?php $stylePage = ($page ?? '') === 'register' ? 'login' : ($page ?? ''); ?>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/fonts/fonts.css">
-    <link rel="stylesheet" href="/assets/css/pages/<?= htmlspecialchars($page ?? '') ?>.css">
+    <link rel="stylesheet" href="/assets/css/pages/<?= htmlspecialchars($stylePage) ?>.css">
 
 <body>
     <header>
@@ -53,7 +54,16 @@
                 </ul>
             </li>
 
-            <li class="nav-item nav-link" data-href="/login" tabindex="0"><span>CONNEXION</span></li>
+            <?php if (!empty($_SESSION['user_id'])): ?>
+                <li class="nav-item">
+                    <form method="POST" action="/logout">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\App\Service\Csrf::token(), ENT_QUOTES, 'UTF-8') ?>">
+                        <button type="submit">DÉCONNEXION</button>
+                    </form>
+                </li>
+            <?php else: ?>
+                <li class="nav-item nav-link" data-href="/login" tabindex="0"><span>CONNEXION</span></li>
+            <?php endif; ?>
         </ul>
     </nav>
 

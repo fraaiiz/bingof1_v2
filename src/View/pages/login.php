@@ -4,7 +4,12 @@
             <h1>Connexion</h1>
         </div>
 
+        <?php if (!empty($authError)): ?>
+            <p class="auth-error" role="alert"><?= htmlspecialchars($authError, ENT_QUOTES, 'UTF-8') ?></p>
+        <?php endif; ?>
+
         <form method="POST" action="/login" id="login-form" class="login-form needs-validation" autocomplete="on" novalidate>
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <div class="form-group">
                 <label for="username" class="form-label">Pseudo/email</label>
                 <input type="text" id="username" name="username" class="form-control" autocomplete="username" placeholder="Votre pseudo/email" required>
