@@ -54,8 +54,10 @@
                             </div>
                         </div>
                         <div class="results-buttons">
-                            <button class="results">Accéder aux résultats</button>
-                            <button class="edit">Éditer les résultats</button>
+                            <a class="results" href="/saisons/<?= rawurlencode((string) $annee) ?>/courses/<?= rawurlencode((string) $course['id']) ?>/resultats">Accéder aux résultats</a>
+                            <?php if ($canEditResults): ?>
+                                <a class="edit" href="/saisons/<?= rawurlencode((string) $annee) ?>/courses/<?= rawurlencode((string) $course['id']) ?>/resultats/edition">Éditer les résultats</a>
+                            <?php endif; ?>
                         </div>
                     </article>
                 <?php endforeach; ?>

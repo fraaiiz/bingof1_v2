@@ -13,6 +13,8 @@ use App\Controller\LesBingosController;
 use App\Controller\InfosController;
 use App\Controller\CalendrierController;
 use App\Controller\ClassementController;
+use App\Controller\ResultatController;
+use App\Controller\EditResultatController;
 use App\Controller\LoginController;
 use App\Controller\PredictionController;
 use App\Controller\RegisterController;
@@ -32,6 +34,9 @@ $router->get('/classement', [new ClassementController(), 'redirectToCurrentSeaso
 $router->get('/saisons/{annee}/infos', [new InfosController(), 'index']);
 $router->get('/saisons/{annee}/calendrier', [new CalendrierController(), 'index']);
 $router->get('/saisons/{annee}/classement', [new ClassementController(), 'index']);
+$router->get('/saisons/{annee}/courses/{id}/resultats', [new ResultatController(), 'index']);
+$router->get('/saisons/{annee}/courses/{id}/resultats/edition', [new EditResultatController(), 'index']);
+$router->post('/saisons/{annee}/courses/{id}/resultats/edition', [new EditResultatController(), 'store']);
 
 $router->get('/login', [new LoginController(), 'index']);
 $router->post('/login', [new LoginController(), 'authenticate']);

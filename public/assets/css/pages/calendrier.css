@@ -151,6 +151,7 @@
     font: inherit;
     font-weight: 700;
     cursor: pointer;
+    text-decoration: none;
     transition: transform 0.2s ease, filter 0.2s ease;
 }
 

@@ -48,7 +48,9 @@ class CalendrierController {
             'title' => 'BingoF1 - Calendrier ' . $annee,
             'annee' => $annee,
             'courses' => $courses,
-            'selectedCourseIndex' => $selectedCourseIndex
+            'selectedCourseIndex' => $selectedCourseIndex,
+            'canEditResults' => !empty($_SESSION['user_id'])
+                && in_array($_SESSION['user_role'] ?? null, ['admin', 'editor'], true),
         ]);
     }
 
