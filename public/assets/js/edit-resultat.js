@@ -1,14 +1,12 @@
 (() => {
     const pilotsData = document.getElementById('edit-resultat-pilotes');
-    if (!pilotsData) {
-        return;
-    }
-
-    let pilots;
-    try {
-        pilots = JSON.parse(pilotsData.textContent);
-    } catch {
-        return;
+    let pilots = [];
+    if (pilotsData) {
+        try {
+            pilots = JSON.parse(pilotsData.textContent);
+        } catch (error) {
+            console.error('Impossible de charger la liste des pilotes.', error);
+        }
     }
 
     const normalize = (value) => value
@@ -38,10 +36,11 @@
     inputs.forEach((input) => {
         const listbox = document.getElementById(input.getAttribute('aria-controls'));
         const pilotIdField = input.parentElement.querySelector('[data-pilot-id]');
+        const teamIdField = input.parentElement.querySelector('[data-team-id]');
         let matchingPilots = [];
         let activeIndex = -1;
 
-        if (!listbox || !pilotIdField) {
+        if (!listbox || !pilotIdField || !teamIdField) {
             return;
         }
 
@@ -64,6 +63,7 @@
         const selectPilot = (pilot) => {
             input.value = pilot.label;
             pilotIdField.value = pilot.id;
+            teamIdField.value = pilot.teamId;
             closeSuggestions(input);
             input.dispatchEvent(new Event('change', { bubbles: true }));
         };
@@ -130,6 +130,7 @@
 
         input.addEventListener('input', () => {
             pilotIdField.value = '';
+            teamIdField.value = '';
             showSuggestions();
         });
         input.addEventListener('focus', showSuggestions);
@@ -239,10 +240,38 @@
         });
     };
 
+    const updateRacePoints = (form) => {
+        const pointsByPosition = form.dataset.resultSession === 'sprint'
+            ? [0, 8, 7, 6, 5, 4, 3, 2, 1]
+            : [0, 25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
+        const halfPoints = Boolean(form.querySelector('[data-half-points-toggle]')?.checked);
+
+        form.querySelectorAll('[data-result-points]').forEach((output) => {
+            const row = output.closest('tr');
+            const position = Number(output.dataset.position);
+            const status = row?.querySelector('[data-result-status]')?.value || '';
+            const points = status === 'dsq' || status === 'np'
+                ? 0
+                : (pointsByPosition[position] || 0) * (halfPoints ? 0.5 : 1);
+
+            output.textContent = Number.isInteger(points)
+                ? String(points)
+                : points.toLocaleString('fr-FR', { maximumFractionDigits: 1 });
+        });
+    };
+
     document.querySelectorAll('form[data-result-session="sprint"], form[data-result-session="course"]').forEach((form) => {
-        form.addEventListener('input', () => updateRaceGaps(form));
-        form.addEventListener('change', () => updateRaceGaps(form));
+        form.querySelector('[data-half-points-toggle]')?.addEventListener('change', () => updateRacePoints(form));
+        form.addEventListener('input', () => {
+            updateRaceGaps(form);
+            updateRacePoints(form);
+        });
+        form.addEventListener('change', () => {
+            updateRaceGaps(form);
+            updateRacePoints(form);
+        });
         updateRaceGaps(form);
+        updateRacePoints(form);
     });
 
     const firstInvalidField = document.querySelector('[aria-invalid="true"]');

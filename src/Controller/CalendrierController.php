@@ -21,10 +21,22 @@ class CalendrierController {
         $courses = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $today = new \DateTimeImmutable('today');
-        $selectedCourseIndex = max(count($courses) - 1, 0);
+        $eligibleCourseIndexes = [];
+        foreach ($courses as $index => $course) {
+            if ($course['is_cancelled'] !== 'yes') {
+                $eligibleCourseIndexes[] = $index;
+            }
+        }
+        $selectedCourseIndex = $eligibleCourseIndexes === []
+            ? 0
+            : $eligibleCourseIndexes[count($eligibleCourseIndexes) - 1];
         $nextCourseIndex = null;
 
         foreach ($courses as $index => $course) {
+            if ($course['is_cancelled'] === 'yes') {
+                continue;
+            }
+
             $startDate = (new \DateTimeImmutable($course['date_fp1']))->setTime(0, 0);
             $endDate = (new \DateTimeImmutable($course['date_course']))->setTime(23, 59, 59);
 

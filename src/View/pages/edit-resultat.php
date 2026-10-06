@@ -11,6 +11,7 @@ foreach ($pilotes as $pilote) {
     $pilotLabelParts[] = $pilote['role'] === 'reserve' ? '(Réserve)' : '(Titulaire)';
     $pilotesPourRecherche[] = [
         'id' => (int) $pilote['id'],
+        'teamId' => (int) $pilote['ecurie_id'],
         'label' => implode(' - ', $pilotLabelParts),
     ];
 }
@@ -32,9 +33,19 @@ $sessionDefinitions = [
     'sprint' => ['label' => 'Sprint', 'timeFields' => [['key' => 'time', 'label' => 'Temps']], 'showRaceFields' => true, 'showGap' => true, 'showPoints' => true],
     'course' => ['label' => 'Course', 'timeFields' => [['key' => 'time', 'label' => 'Temps']], 'showRaceFields' => true, 'showGap' => true, 'showPoints' => true],
 ];
+$pilotesParAffectation = [];
 $pilotesParId = [];
+$equipesParPilote = [];
 foreach ($pilotesPourRecherche as $pilote) {
-    $pilotesParId[$pilote['id']] = $pilote['label'];
+    $pilotesParAffectation[$pilote['id'] . ':' . $pilote['teamId']] = $pilote['label'];
+}
+foreach ($pilotes as $pilote) {
+    $pilotId = (int) $pilote['id'];
+    $teamId = (int) $pilote['ecurie_id'];
+    if ($pilote['role'] === 'titulaire' || !isset($equipesParPilote[$pilotId])) {
+        $equipesParPilote[$pilotId] = $teamId;
+        $pilotesParId[$pilotId] = $pilotesParAffectation[$pilotId . ':' . $teamId];
+    }
 }
 ?>
 <section class="edit-resultat-page">
@@ -71,6 +82,7 @@ foreach ($pilotesPourRecherche as $pilote) {
                 $pointsByPosition = $sessionKey === 'sprint'
                     ? [1 => 8, 2 => 7, 3 => 6, 4 => 5, 5 => 4, 6 => 3, 7 => 2, 8 => 1]
                     : [1 => 25, 2 => 18, 3 => 15, 4 => 12, 5 => 10, 6 => 8, 7 => 6, 8 => 4, 9 => 2, 10 => 1];
+                $hasHalfPointsOption = in_array($sessionKey, ['course', 'sprint'], true);
                 ?>
                 <form class="edit-resultat-form" method="post" data-result-session="<?= !empty($session['showGap']) ? htmlspecialchars($sessionKey, ENT_QUOTES, 'UTF-8') : '' ?>" action="/saisons/<?= rawurlencode((string) $annee) ?>/courses/<?= rawurlencode((string) $course['id']) ?>/resultats/edition">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
@@ -80,6 +92,18 @@ foreach ($pilotesPourRecherche as $pilote) {
                             <span><?= htmlspecialchars($session['label'], ENT_QUOTES, 'UTF-8') ?></span>
                             <span class="edit-resultat-arrow" aria-hidden="true">&#9660;</span>
                         </summary>
+                        <?php if ($hasHalfPointsOption): ?>
+                            <label class="edit-resultat-half-points">
+                                <input
+                                    type="checkbox"
+                                    name="half_points"
+                                    value="1"
+                                    data-half-points-toggle
+                                    <?= !empty($course['half_points']) ? 'checked' : '' ?>
+                                >
+                                <span>Attribuer la moitié des points (course écourtée)</span>
+                            </label>
+                        <?php endif; ?>
                         <div class="edit-resultat-table-wrap">
                             <table class="edit-resultat-table">
                                 <thead>
@@ -107,8 +131,9 @@ foreach ($pilotesPourRecherche as $pilote) {
                                         $row = $sessionResults[$position] ?? [];
                                         $rowError = $sessionErrors[$position] ?? null;
                                         $pilotId = (int) ($row['pilot_id'] ?? $row['pilote_id'] ?? 0);
-                                        $pilotQuery = $row['pilot_query'] ?? ($pilotesParId[$pilotId] ?? '');
-                                        $pilotError = ($rowError['field'] ?? null) === 'pilot_query' ? $rowError['message'] : null;
+                                        $teamId = (int) ($row['team_id'] ?? $row['ecurie_id'] ?? $equipesParPilote[$pilotId] ?? 0);
+                                        $pilotQuery = $row['pilot_query'] ?? ($pilotesParAffectation[$pilotId . ':' . $teamId] ?? $pilotesParId[$pilotId] ?? '');
+                                        $pilotError = in_array($rowError['field'] ?? null, ['pilot_query', 'team_id'], true) ? $rowError['message'] : null;
                                         ?>
                                         <tr>
                                             <th scope="row"><?= $position ?></th>
@@ -131,6 +156,7 @@ foreach ($pilotesPourRecherche as $pilote) {
                                                         placeholder="Rechercher un pilote..."
                                                     >
                                                     <input type="hidden" name="results[<?= $position ?>][pilot_id]" value="<?= $pilotId ?: '' ?>" data-pilot-id>
+                                                    <input type="hidden" name="results[<?= $position ?>][team_id]" value="<?= $pilotId && $teamId ? $teamId : '' ?>" data-team-id>
                                                     <div
                                                         class="edit-resultat-suggestions"
                                                         id="pilotes-options-<?= $sessionId ?>-<?= $position ?>"
@@ -212,7 +238,14 @@ foreach ($pilotesPourRecherche as $pilote) {
                                                 <td><output class="edit-resultat-calculated" data-result-gap>--</output></td>
                                             <?php endif; ?>
                                             <?php if (!empty($session['showPoints'])): ?>
-                                                <td><output class="edit-resultat-calculated" data-result-points><?= $pointsByPosition[$position] ?? 0 ?></output></td>
+                                                <?php
+                                                $points = $pointsByPosition[$position] ?? 0;
+                                                if (!empty($course['half_points'])) {
+                                                    $points /= 2;
+                                                }
+                                                $pointsDisplay = rtrim(rtrim(number_format($points, 1, ',', ''), '0'), ',');
+                                                ?>
+                                                <td><output class="edit-resultat-calculated" data-result-points data-position="<?= $position ?>"><?= $pointsDisplay ?></output></td>
                                             <?php endif; ?>
                                         </tr>
                                     <?php endfor; ?>
@@ -229,4 +262,4 @@ foreach ($pilotesPourRecherche as $pilote) {
 </section>
 
 <script type="application/json" id="edit-resultat-pilotes"><?= json_encode($pilotesPourRecherche, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?></script>
-<script src="/assets/js/edit-resultat.js" defer></script>
+<script src="/assets/js/edit-resultat.js?v=3" defer></script>

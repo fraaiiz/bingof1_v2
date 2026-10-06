@@ -27,6 +27,9 @@ $sessionDefinitions = [
 		<p class="resultat-circuit"><?= htmlspecialchars($course['nom_circuit'], ENT_QUOTES, 'UTF-8') ?></p>
 		<p class="resultat-dates"><?= $dateDebut->format('d/m/Y') ?> - <?= $dateCourse->format('d/m/Y') ?></p>
 	</header>
+	<?php if ($course['is_cancelled'] === 'yes'): ?>
+		<p class="resultat-cancelled" role="status">Cette course a été annulée et n'a pas eu lieu. Aucun résultat n'est disponible.</p>
+	<?php else: ?>
 	<div class="resultat-sessions">
 		<?php if ($sessions === []): ?>
 			<p class="resultat-sessions-empty">Aucune séance n'est configurée pour ce format.</p>
@@ -128,6 +131,8 @@ $sessionDefinitions = [
 											<td>
 													<?php if ($status !== ''): ?>
 														<span class="resultat-status"><?= htmlspecialchars($status, ENT_QUOTES, 'UTF-8') ?></span>
+													<?php elseif ($result['legacy_delta'] !== null): ?>
+														<?= htmlspecialchars($result['legacy_delta'], ENT_QUOTES, 'UTF-8') ?>
 									<?php elseif ($eliminatedBeforeStage): ?>
 										-
 												<?php elseif ($time === null): ?>
@@ -148,8 +153,14 @@ $sessionDefinitions = [
 											<td><?= $result['tours'] === null ? '-' : htmlspecialchars((string) $result['tours'], ENT_QUOTES, 'UTF-8') ?></td>
 										<?php endif; ?>
 								<?php if (!empty($session['showPoints'])): ?>
-									<?php $points = $status === 'DSQ' || $status === 'NP' ? 0 : ($pointsByPosition[$position] ?? 0); ?>
-									<td><?= $points > 0 ? $points : '' ?></td>
+									<?php
+									$points = $status === 'DSQ' || $status === 'NP' ? 0 : ($pointsByPosition[$position] ?? 0);
+									if (!empty($course['half_points'])) {
+										$points /= 2;
+									}
+									$pointsDisplay = rtrim(rtrim(number_format($points, 1, ',', ''), '0'), ',');
+									?>
+									<td><?= $points > 0 ? $pointsDisplay : '' ?></td>
 								<?php endif; ?>
 									</tr>
 								<?php endforeach; ?>
@@ -160,4 +171,5 @@ $sessionDefinitions = [
 			</details>
 		<?php endforeach; ?>
 	</div>
+	<?php endif; ?>
 </section>

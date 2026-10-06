@@ -31,6 +31,18 @@ class ResultatController {
             return;
         }
 
+        if ($course['is_cancelled'] === 'yes') {
+            http_response_code(410);
+            (new ViewRenderer())->render('View/pages/resultat', [
+                'title' => 'BingoF1 - Course annulée ' . $course['nom_circuit'] . ' ' . $annee,
+                'annee' => $annee,
+                'course' => $course,
+                'sessions' => [],
+                'resultsBySession' => [],
+            ]);
+            return;
+        }
+
         $sessionsStatement = $pdo->prepare(
             'SELECT id, session_type
             FROM sessions
@@ -41,7 +53,7 @@ class ResultatController {
         $sessions = $sessionsStatement->fetchAll(\PDO::FETCH_ASSOC);
 
         $resultsStatement = $pdo->prepare(
-            'SELECT r.session_id, r.position, r.pilote_id, r.time,
+            'SELECT r.session_id, r.position, r.pilote_id, r.time, r.legacy_delta,
                 r.q1_time, r.q2_time, r.q3_time, r.sq1_time, r.sq2_time, r.sq3_time,
                 r.tours, r.dsq, r.dnf, r.np, p.prenom_pilote, p.nom_pilote
             FROM resultats r

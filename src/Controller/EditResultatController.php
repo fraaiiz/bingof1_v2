@@ -26,6 +26,11 @@ class EditResultatController
             echo '404 Not Found';
             return;
         }
+        if ($course['is_cancelled'] === 'yes') {
+            http_response_code(410);
+            echo 'Cette course a été annulée. Ses résultats ne peuvent pas être édités.';
+            return;
+        }
 
         $notice = $_SESSION['edit_resultat_notice'] ?? null;
         unset($_SESSION['edit_resultat_notice']);
@@ -51,6 +56,11 @@ class EditResultatController
             echo '404 Not Found';
             return;
         }
+        if ($course['is_cancelled'] === 'yes') {
+            http_response_code(410);
+            echo 'Cette course a été annulée. Ses résultats ne peuvent pas être édités.';
+            return;
+        }
 
         $sessions = $this->findSessions($pdo, (int) $course['format_id']);
         $sessionsById = [];
@@ -67,6 +77,18 @@ class EditResultatController
             return;
         }
         $sessionId = (int) $sessionId;
+        $sessionType = $sessionsById[$sessionId];
+        $isPointsSession = in_array($sessionType, ['course', 'sprint'], true);
+        $halfPointsEnabled = !empty($course['half_points']);
+        if ($isPointsSession) {
+            if (isset($_POST['half_points']) && $_POST['half_points'] !== '1') {
+                http_response_code(400);
+                echo 'Option de points invalide.';
+                return;
+            }
+            $halfPointsEnabled = ($_POST['half_points'] ?? null) === '1';
+            $course['half_points'] = $halfPointsEnabled ? 1 : 0;
+        }
 
         $postedRows = $_POST['results'] ?? null;
         if (!is_array($postedRows)) {
@@ -77,15 +99,21 @@ class EditResultatController
 
         try {
             $eligibleDriversStatement = $pdo->prepare(
-                'SELECT DISTINCT pilote_id
+                'SELECT pilote_id, ecurie_id, role
                 FROM pilotes_engagement
-                WHERE saison_id = :saison_id'
+                WHERE saison_id = :saison_id
+                ORDER BY pilote_id ASC,
+                    CASE WHEN role = \'titulaire\' THEN 0 ELSE 1 END,
+                    id ASC'
             );
             $eligibleDriversStatement->execute([':saison_id' => $course['id_saison']]);
-            $eligibleDrivers = array_fill_keys(
-                array_map('intval', $eligibleDriversStatement->fetchAll(PDO::FETCH_COLUMN)),
-                true
-            );
+            $eligibleDrivers = [];
+            foreach ($eligibleDriversStatement->fetchAll(PDO::FETCH_ASSOC) as $engagement) {
+                $driverId = (int) $engagement['pilote_id'];
+                $teamId = (int) $engagement['ecurie_id'];
+                $eligibleDrivers[$driverId]['teams'][$teamId] = true;
+                $eligibleDrivers[$driverId]['default_team_id'] ??= $teamId;
+            }
             $rows = $this->validateRows(
                 $postedRows,
                 $sessionsById[$sessionId],
@@ -93,6 +121,15 @@ class EditResultatController
             );
 
             $pdo->beginTransaction();
+            if ($isPointsSession) {
+                $halfPointsStatement = $pdo->prepare(
+                    'UPDATE courses SET half_points = :half_points WHERE id = :course_id'
+                );
+                $halfPointsStatement->execute([
+                    ':half_points' => $halfPointsEnabled ? 1 : 0,
+                    ':course_id' => $course['id'],
+                ]);
+            }
             $this->upsertRows($pdo, (int) $course['id'], $sessionId, $rows);
             $this->removeUnselectedRows($pdo, (int) $course['id'], $sessionId, array_column($rows, 'pilote_id'));
             $pdo->commit();
@@ -110,6 +147,7 @@ class EditResultatController
 
             $fieldLabel = match ($exception->field) {
                 'pilot_query' => 'Pilote',
+                'team_id' => 'Écurie',
                 'time' => 'Temps',
                 'q1_time' => 'Q1',
                 'q2_time' => 'Q2',
@@ -223,7 +261,7 @@ class EditResultatController
         $sessions = $this->findSessions($pdo, (int) $course['format_id']);
         $driversStatement = $pdo->prepare(
             "SELECT p.id, p.numero_pilote, p.prenom_pilote, p.nom_pilote,
-                pe.role, e.nom_ecurie
+                pe.ecurie_id, pe.role, e.nom_ecurie
             FROM pilotes_engagement pe
             INNER JOIN pilotes p ON p.id = pe.pilote_id
             LEFT JOIN ecuries e ON e.id = pe.ecurie_id
@@ -301,6 +339,7 @@ class EditResultatController
                 || trim((string) ($postedRow['sq2_time'] ?? '')) !== ''
                 || trim((string) ($postedRow['sq3_time'] ?? '')) !== ''
                 || trim((string) ($postedRow['tours'] ?? '')) !== ''
+                || trim((string) ($postedRow['team_id'] ?? '')) !== ''
                 || trim((string) ($postedRow['status'] ?? '')) !== '';
 
             if ($pilotIdValue === '') {
@@ -314,6 +353,13 @@ class EditResultatController
             if ($pilotId === false || !isset($eligibleDrivers[$pilotId])) {
                 throw new ResultValidationException((int) $position, 'pilot_query', 'Ce pilote n’est pas engagé pour cette saison.');
             }
+            $teamIdValue = trim((string) ($postedRow['team_id'] ?? ''));
+            $teamId = $teamIdValue === ''
+                ? $eligibleDrivers[$pilotId]['default_team_id']
+                : filter_var($teamIdValue, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            if ($teamId === false || !isset($eligibleDrivers[$pilotId]['teams'][$teamId])) {
+                throw new ResultValidationException((int) $position, 'team_id', 'Cette écurie n’est pas associée à ce pilote pour cette saison.');
+            }
             if (isset($seenDrivers[$pilotId])) {
                 throw new ResultValidationException((int) $position, 'pilot_query', 'Ce pilote apparaît déjà dans cette séance.');
             }
@@ -321,6 +367,7 @@ class EditResultatController
 
             $row = [
                 'pilote_id' => $pilotId,
+                'ecurie_id' => $teamId,
                 'position' => $position,
                 'time' => null,
                 'q1_time' => null,
@@ -375,7 +422,7 @@ class EditResultatController
     private function upsertRows(PDO $pdo, int $courseId, int $sessionId, array $rows): void
     {
         $columns = [
-            'position', 'time', 'q1_time', 'q2_time', 'q3_time',
+            'ecurie_id', 'position', 'time', 'q1_time', 'q2_time', 'q3_time',
             'sq1_time', 'sq2_time', 'sq3_time', 'tours', 'dnf', 'dsq', 'np',
         ];
         $insertColumns = array_merge(['course_id', 'session_id', 'pilote_id'], $columns);

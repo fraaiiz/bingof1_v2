@@ -92,19 +92,19 @@ class HomeController {
             $pdo = $database->getConnection();
             $now = date('Y-m-d H:i:s');
 
-            $stmt = $pdo->prepare('SELECT id, nom_circuit, date_fp1, date_course FROM courses WHERE date_fp1 <= :started_at AND DATE_ADD(date_course, INTERVAL 3 HOUR) >= :ends_at ORDER BY date_fp1 DESC LIMIT 1');
+            $stmt = $pdo->prepare("SELECT id, nom_circuit, date_fp1, date_course FROM courses WHERE is_cancelled = 'no' AND date_fp1 <= :started_at AND DATE_ADD(date_course, INTERVAL 3 HOUR) >= :ends_at ORDER BY date_fp1 DESC LIMIT 1");
             $stmt->execute([':started_at' => $now, ':ends_at' => $now]);
             $course = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if ($course) {
                 $status = 'en_cours';
             } else {
-                $stmt = $pdo->prepare('SELECT id, nom_circuit, date_fp1, date_course FROM courses WHERE date_fp1 > :now ORDER BY date_fp1 ASC LIMIT 1');
+                $stmt = $pdo->prepare("SELECT id, nom_circuit, date_fp1, date_course FROM courses WHERE is_cancelled = 'no' AND date_fp1 > :now ORDER BY date_fp1 ASC LIMIT 1");
                 $stmt->execute([':now' => $now]);
                 $course = $stmt->fetch(\PDO::FETCH_ASSOC);
 
                 $yesterday = date('Y-m-d', strtotime('-1 day'));
-                $stmt = $pdo->prepare('SELECT 1 FROM courses WHERE DATE(date_course) = :yesterday LIMIT 1');
+                $stmt = $pdo->prepare("SELECT 1 FROM courses WHERE is_cancelled = 'no' AND DATE(date_course) = :yesterday LIMIT 1");
                 $stmt->execute([':yesterday' => $yesterday]);
                 $hidePredictions = $stmt->fetchColumn() !== false;
             }

@@ -28,6 +28,9 @@
                             <div class="circuit-infos">
                                 <p class="circuit-round">Manche <?= htmlspecialchars((string) $course['num_manche']) ?></p>
                                 <h2><?= htmlspecialchars($course['nom_circuit']) ?></h2>
+                                <?php if ($course['is_cancelled'] === 'yes'): ?>
+                                    <p class="circuit-cancelled" role="status">Course annulée — aucun résultat</p>
+                                <?php endif; ?>
                                 <p class="circuit-dates">
                                     <?= $dateDebut->format('d/m/Y') ?> - <?= $dateCourse->format('d/m/Y') ?>
                                 </p>
@@ -54,9 +57,13 @@
                             </div>
                         </div>
                         <div class="results-buttons">
-                            <a class="results" href="/saisons/<?= rawurlencode((string) $annee) ?>/courses/<?= rawurlencode((string) $course['id']) ?>/resultats">Accéder aux résultats</a>
-                            <?php if ($canEditResults): ?>
-                                <a class="edit" href="/saisons/<?= rawurlencode((string) $annee) ?>/courses/<?= rawurlencode((string) $course['id']) ?>/resultats/edition">Éditer les résultats</a>
+                            <?php if ($course['is_cancelled'] === 'yes'): ?>
+                                <span class="results-unavailable">Aucun résultat pour cette course</span>
+                            <?php else: ?>
+                                <a class="results" href="/saisons/<?= rawurlencode((string) $annee) ?>/courses/<?= rawurlencode((string) $course['id']) ?>/resultats">Accéder aux résultats</a>
+                                <?php if ($canEditResults): ?>
+                                    <a class="edit" href="/saisons/<?= rawurlencode((string) $annee) ?>/courses/<?= rawurlencode((string) $course['id']) ?>/resultats/edition">Éditer les résultats</a>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                     </article>

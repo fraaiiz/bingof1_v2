@@ -56,6 +56,17 @@
     color: rgba(255, 255, 255, 0.8);
 }
 
+.resultat-cancelled {
+    margin: 0 auto;
+    padding: 16px 20px;
+    border: 1px solid rgba(255, 193, 7, 0.55);
+    border-radius: 8px;
+    background: rgba(255, 193, 7, 0.12);
+    color: #ffe08a;
+    font-weight: 700;
+    text-align: center;
+}
+
 .resultat-circuit {
     font-size: 1.1rem;
 }

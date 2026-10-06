@@ -1,4 +1,4 @@
-<h1>Le classement <?= htmlspecialchars($annee) ?></h1>
+<h1>Le classement <?= htmlspecialchars((string) $annee, ENT_QUOTES, 'UTF-8') ?></h1>
 
 <div class="classement-content">
     <div class="classement-table-left">
@@ -13,141 +13,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>2</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>3</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>4</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>5</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>6</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>7</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>8</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>9</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>10</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>11</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>2</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>3</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>4</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>5</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>6</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>7</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>8</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>9</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>10</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>11</p></td>
-                    <td><p>Max Verstappen</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
+                <?php if ($pilotes === []): ?>
+                    <tr>
+                        <td colspan="4"><p>Aucun pilote classé pour cette saison.</p></td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($pilotes as $pilote): ?>
+                        <tr>
+                            <td><p><?= (int) $pilote['rank'] ?></p></td>
+                            <td><p><?= htmlspecialchars($pilote['name'], ENT_QUOTES, 'UTF-8') ?></p></td>
+                            <td><p><?= htmlspecialchars($pilote['team_name'] !== '' ? $pilote['team_name'] : '-', ENT_QUOTES, 'UTF-8') ?></p></td>
+                            <td><p><?= rtrim(rtrim(number_format($pilote['points'], 1, ',', ''), '0'), ',') ?></p></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
+
     <div class="classement-table-right">
         <table>
             <caption>Classement Écurie</caption>
@@ -159,61 +42,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                <tr>
-                    <td><p>1</p></td>
-                    <td><p>Red Bull Racing</p></td>
-                    <td><p>454</p></td>
-                </tr>
-                </tbody>
+                <?php if ($equipes === []): ?>
+                    <tr>
+                        <td colspan="3"><p>Aucune écurie enregistrée pour cette saison.</p></td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($equipes as $equipe): ?>
+                        <tr>
+                            <td><p><?= (int) $equipe['rank'] ?></p></td>
+                            <td><p><?= htmlspecialchars($equipe['name'], ENT_QUOTES, 'UTF-8') ?></p></td>
+                            <td><p><?= rtrim(rtrim(number_format($equipe['points'], 1, ',', ''), '0'), ',') ?></p></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
         </table>
     </div>
+</div>

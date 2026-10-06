@@ -68,6 +68,17 @@
     text-align: center;
 }
 
+.circuit-cancelled {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 193, 7, 0.55);
+    border-radius: 8px;
+    background: rgba(255, 193, 7, 0.14);
+    color: #ffe08a;
+    font-weight: 700;
+}
+
 .calendrier-card h2 {
     margin: 0;
     font-size: clamp(2rem, 2vw + 1rem, 3rem);
@@ -153,6 +164,21 @@
     cursor: pointer;
     text-decoration: none;
     transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.results-unavailable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 193, 7, 0.45);
+    border-radius: 8px;
+    background: rgba(255, 193, 7, 0.12);
+    color: #ffe08a;
+    font-weight: 700;
+    text-align: center;
 }
 
 .results {
