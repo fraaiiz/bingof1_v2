@@ -8,6 +8,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 use App\Router\Router;
 use App\Controller\HomeController;
+use App\Controller\ChatController;
 use App\Controller\MonBingoController;
 use App\Controller\LesBingosController;
 use App\Controller\InfosController;
@@ -22,9 +23,12 @@ use App\Controller\RegisterController;
 $router = new Router();
 
 $router->get('/', [new HomeController(), 'index']);
+$router->get('/chat', [new ChatController(), 'index']);
+$router->post('/chat', [new ChatController(), 'store']);
 $router->post('/predictions', [new PredictionController(), 'store']);
 
 $router->get('/mon-bingo', [new MonBingoController(), 'index']);
+$router->post('/mon-bingo', [new MonBingoController(), 'index']);
 $router->get('/les-bingos', [new LesBingosController(), 'index']);
 
 $router->get('/infos', [new InfosController(), 'redirectToCurrentSeason']);

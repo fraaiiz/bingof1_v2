@@ -47,6 +47,7 @@ class HomeController {
             'status' => $courseData['status'],
             'hidePredictions' => $courseData['hidePredictions'],
             'isLoggedIn' => $userId !== null,
+            'userRole' => $_SESSION['user_role'] ?? '',
             'drivers' => $drivers,
             'userPrediction' => $userPrediction,
             'participantPredictions' => $participantPredictions,

@@ -30,6 +30,7 @@
 
 .bingo-cell {
     min-height: 80px;
+    min-width: 0;
     border: 1px solid rgba(255,255,255,0.15);
     display: flex;
     align-items: center;
@@ -37,6 +38,23 @@
     background: rgba(255,255,255,0.02);
     font-weight: 700;
     color: #fff;
+    padding: 8px;
+    overflow-wrap: anywhere;
+    text-align: center;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+}
+
+.bingo-cell.checked-cell,
+.mini-bingo-cell.checked-cell {
+    background: rgba(0, 151, 50, 0.72);
+    border-color: rgba(255,255,255,0.42);
+}
+
+.bingo-cell.selected-cell {
+    outline: 2px solid #fff;
+    outline-offset: -3px;
 }
 
 .bingo-buttons {
@@ -58,6 +76,178 @@
     background: linear-gradient(135deg, #970008, #b80d17);
 }
 
+.bingo-notice {
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    background: rgba(40, 167, 69, 0.2);
+}
+
+.bingo-progress {
+    margin: 0 0 14px;
+    opacity: 0.85;
+}
+
+.bingo-overlay {
+    width: min(900px, calc(100vw - 48px));
+    max-width: none;
+    max-height: min(90vh, 900px);
+    padding: 0;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 18px;
+    color: #fff;
+    background: #970008;
+}
+
+.bingo-overlay[data-mode="view"] {
+    width: min(420px, calc(100vw - 32px));
+    max-height: min(80vh, 480px);
+}
+
+.bingo-overlay::backdrop {
+    background: rgba(0,0,0,0.78);
+    backdrop-filter: blur(3px);
+}
+
+.bingo-overlay-content {
+    display: flex;
+    flex-direction: column;
+    background: rgba(52, 58, 64, 0.88);
+    gap: 18px;
+    padding: 22px;
+    text-align: left;
+}
+
+.bingo-overlay[data-mode="view"] .bingo-overlay-content {
+    gap: 16px;
+    padding: 22px;
+}
+
+.bingo-overlay[data-mode="view"] .bingo-overlay-header > div {
+    flex: 1;
+    text-align: center;
+}
+
+.bingo-overlay-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.bingo-overlay-header h2,
+.bingo-overlay-header p {
+    margin: 0;
+}
+
+.bingo-overlay-header p {
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.bingo-overlay-close {
+    flex: 0 0 44px;
+    min-height: 44px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.bingo-overlay-grid .bingo-cell {
+    min-height: 72px;
+}
+
+.bingo-cell-preview[hidden] {
+    display: none;
+}
+
+.bingo-cell-preview {
+    min-height: 0;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+}
+
+.bingo-cell-preview p {
+    margin: 0 0 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    opacity: 0.75;
+}
+
+.bingo-cell-preview div {
+    overflow-wrap: anywhere;
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+.bingo-overlay[data-mode="view"] .bingo-cell-preview div {
+    text-align: center;
+}
+
+.bingo-cell-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bingo-cell-editor[hidden] {
+    display: none;
+}
+
+.bingo-cell-editor label {
+    font-weight: 700;
+}
+
+.bingo-cell-editor-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 200px;
+    gap: 14px;
+    align-items: stretch;
+}
+
+.bingo-cell-editor textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px;
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+    font: inherit;
+    height: 80px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.bingo-cell-editor-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.bingo-cell-editor button {
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(135deg, #970008, #b80d17);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.bingo-cell-editor-actions button {
+    width: 100%;
+}
+
 .bingo-rules {
     display: flex;
     flex-direction: column;
@@ -73,4 +263,64 @@
     margin: 0;
     text-align: left;
     line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .bingo-page {
+        grid-template-columns: 1fr;
+    }
+
+    .bingo-panel,
+    .bingo-rules {
+        padding: 16px;
+    }
+
+    .bingo-overlay[data-mode="edit"] {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .bingo-overlay[data-mode="edit"] .bingo-overlay-content {
+        min-height: 100%;
+        box-sizing: border-box;
+        padding: max(16px, env(safe-area-inset-top)) 14px max(16px, env(safe-area-inset-bottom));
+        gap: 14px;
+    }
+
+    .bingo-overlay[data-mode="edit"] .bingo-overlay-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .bingo-overlay[data-mode="edit"] .bingo-overlay-grid .bingo-cell {
+        min-height: clamp(54px, 16vw, 76px);
+        padding: 4px;
+        font-size: clamp(0.62rem, 2.5vw, 0.85rem);
+    }
+
+    .bingo-form > .bingo-grid .bingo-cell {
+        min-height: clamp(54px, 16vw, 76px);
+        padding: 4px;
+        font-size: clamp(0.62rem, 2.5vw, 0.85rem);
+    }
+
+    .bingo-cell-editor {
+        gap: 10px;
+    }
+
+    .bingo-cell-editor-controls {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .bingo-cell-editor-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }

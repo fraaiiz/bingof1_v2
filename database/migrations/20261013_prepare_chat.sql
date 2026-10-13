@@ -1,0 +1,5 @@
+ALTER TABLE chat
+    MODIFY deleted_at DATETIME NULL DEFAULT NULL;
+
+ALTER TABLE chat
+    ADD COLUMN is_admin_message TINYINT(1) NOT NULL DEFAULT 0 AFTER message;

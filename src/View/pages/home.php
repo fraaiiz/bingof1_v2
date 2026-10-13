@@ -2,7 +2,7 @@
     <div class="home-header">
         <?php if (!empty($course)): ?>
             <h1 class='text-center'>Prochaine course :</h1>
-            <h2 class='text-center'><strong><?= htmlspecialchars($course['nom_circuit']) ?></strong> <span id='countdown'></span></h2>
+            <h2 class='text-center'><strong><?= htmlspecialchars($course['nom_circuit']) ?></strong><br/><span id='countdown'></span></h2>
 
             <script>
                 window.countdownData = {
@@ -21,20 +21,27 @@
     <div class="home-content">
         <div class="home-card-left">
             <h3>Salon de discussion</h3>
+            <div id="chatError" class="chat-error" hidden></div>
             <div class="chat-box">
-                <div class="chat-messages">
-                    <div class="message">
-                        <span class="username">Utilisateur1:</span> <span class="text">Bonjour à tous !</span>
-                    </div>
-                    <div class="message">
-                        <span class="username">Utilisateur2:</span> <span class="text">Salut ! Comment ça va ?</span>
-                    </div>
+                <div id="chatbox" class="chat-messages" aria-live="polite">
+                    <div id="messages"></div>
                 </div>
-                <form class="chat-form">
-                    <input type="text" placeholder="Tapez votre message..." />
-                    <button type="submit">Envoyer</button>
-                </form>
+                <?php if ($isLoggedIn): ?>
+                    <form id="messageForm" class="chat-form">
+                        <input type="text" name="message" placeholder="Entrez votre message" autocomplete="off" maxlength="300" required>
+                        <button type="submit">Envoyer</button>
+                    </form>
+                <?php else: ?>
+                    <p class="chat-login">Connectez-vous pour participer au salon. <a href="/login">Connexion</a></p>
+                <?php endif; ?>
             </div>
+            <script>
+                window.chatData = {
+                    userRole: <?= json_encode($userRole ?? '', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>,
+                    csrfToken: <?= json_encode($csrfToken ?? '', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>
+                };
+            </script>
+            <script src="/assets/js/chat.js"></script>
         </div>
 
         <div class="home-card-right">
