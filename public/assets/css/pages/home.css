@@ -100,6 +100,14 @@
     opacity: 0.75;
 }
 
+.actus-status {
+    margin: 0;
+    padding: 8px 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
 .webhook-box,
 .predictions-box {
     padding: 18px 10px;

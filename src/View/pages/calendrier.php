@@ -2,6 +2,17 @@
     <h1 class="calendrier-header">Le calendrier de la saison <?= htmlspecialchars($annee) ?></h1>
 
     <?php if (!empty($courses)): ?>
+        <div class="calendrier-course-jump">
+            <label for="course-jump">Accès rapide à une course</label>
+            <select id="course-jump" data-course-jump>
+                <?php foreach ($courses as $index => $course): ?>
+                    <option value="<?= (int) $index ?>"<?= $index === $selectedCourseIndex ? ' selected' : '' ?>>
+                        Manche <?= htmlspecialchars((string) $course['num_manche'], ENT_QUOTES, 'UTF-8') ?> — <?= htmlspecialchars($course['nom_circuit'], ENT_QUOTES, 'UTF-8') ?><?= $course['is_cancelled'] === 'yes' ? ' (annulée)' : '' ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
         <div class="calendrier-caroussel" data-carousel aria-label="Carrousel des courses">
             <button type="button" class="carousel-btn carousel-btn-prev" data-previous aria-label="Course précédente"<?= $selectedCourseIndex === 0 ? ' disabled' : '' ?>>&lt;</button>
 
@@ -73,7 +84,7 @@
             <button type="button" class="carousel-btn carousel-btn-next" data-next aria-label="Course suivante"<?= $selectedCourseIndex === count($courses) - 1 ? ' disabled' : '' ?>>&gt;</button>
         </div>
 
-        <script src="/assets/js/calendrier.js" defer></script>
+        <script src="/assets/js/calendrier.js?v=<?= filemtime(__DIR__ . '/../../../public/assets/js/calendrier.js') ?>" defer></script>
     <?php else: ?>
         <h1 class="calendrier-empty">Le calendrier n'est pas encore disponible pour cette saison.</h1>
     <?php endif; ?>

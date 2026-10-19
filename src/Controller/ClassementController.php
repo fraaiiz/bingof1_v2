@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Database\Database;
+use App\Repository\SeasonRepository;
 use App\View\ViewRenderer;
 use PDO;
 
@@ -189,10 +190,16 @@ class ClassementController
         return true;
     }
 
-    public function redirectToCurrentSeason(): void
+    public function redirectToDefaultSeason(): void
     {
-        $currentYear = date('Y');
-        header('Location: /saisons/' . rawurlencode($currentYear) . '/classement');
+        $seasonYear = (new SeasonRepository((new Database())->getConnection()))->findDefaultYear();
+        if ($seasonYear === null) {
+            http_response_code(404);
+            echo 'Aucune saison n’est disponible.';
+            return;
+        }
+
+        header('Location: /saisons/' . rawurlencode((string) $seasonYear) . '/classement');
         exit();
     }
 }

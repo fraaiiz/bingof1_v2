@@ -10,6 +10,37 @@
     text-align: center;
 }
 
+.calendrier-course-jump {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: min(100% - 24px, 600px);
+    margin: 0 auto;
+}
+
+.calendrier-course-jump label {
+    font-weight: 700;
+}
+
+.calendrier-course-jump select {
+    flex: 1 1 260px;
+    min-width: 0;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px;
+    color: #fff;
+    background: #343a40;
+    font: inherit;
+}
+
+.calendrier-course-jump select:focus-visible {
+    outline: 3px solid rgba(255,255,255,0.8);
+    outline-offset: 3px;
+}
+
 .calendrier-caroussel {
     display: grid;
     grid-template-columns: 56px minmax(0, 1fr) 56px;
@@ -254,8 +285,15 @@
 
 @media (max-width: 760px) {
     .calendrier-caroussel {
-        grid-template-columns: 42px minmax(0, 1fr) 42px;
-        gap: 8px;
+        position: relative;
+        display: block;
+        width: calc(100vw - 24px);
+        max-width: none;
+        margin: 0 0 0 calc(50% - 50vw + 12px);
+    }
+
+    .calendrier-cards {
+        width: 100%;
     }
 
     .calendrier-card {
@@ -271,9 +309,26 @@
     }
 
     .carousel-btn {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
         width: 42px;
         height: 42px;
         font-size: 1.5rem;
+        transform: translateY(-50%);
+    }
+
+    .carousel-btn-prev {
+        left: 8px;
+    }
+
+    .carousel-btn-next {
+        right: 8px;
+    }
+
+    .carousel-btn:hover,
+    .carousel-btn:focus {
+        transform: translateY(-50%) scale(1.04);
     }
 
     .results-buttons {

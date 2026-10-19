@@ -31,9 +31,9 @@ $router->get('/mon-bingo', [new MonBingoController(), 'index']);
 $router->post('/mon-bingo', [new MonBingoController(), 'index']);
 $router->get('/les-bingos', [new LesBingosController(), 'index']);
 
-$router->get('/infos', [new InfosController(), 'redirectToCurrentSeason']);
-$router->get('/calendrier', [new CalendrierController(), 'redirectToCurrentSeason']);
-$router->get('/classement', [new ClassementController(), 'redirectToCurrentSeason']);
+$router->get('/infos', [new InfosController(), 'redirectToDefaultSeason']);
+$router->get('/calendrier', [new CalendrierController(), 'redirectToDefaultSeason']);
+$router->get('/classement', [new ClassementController(), 'redirectToDefaultSeason']);
 
 $router->get('/saisons/{annee}/infos', [new InfosController(), 'index']);
 $router->get('/saisons/{annee}/calendrier', [new CalendrierController(), 'index']);

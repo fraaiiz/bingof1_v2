@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Database\Database;
 use App\Repository\PredictionRepository;
 use App\Service\Csrf;
+use App\Service\NewsFeed;
 use App\View\ViewRenderer;
 
 class HomeController {
 
     public function index() {
-        $actus = $this->getActus();
+        $newsFeed = (new NewsFeed())->get();
         $courseData = $this->getNextCourseData();
         $userId = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : null;
         $drivers = [];
@@ -42,7 +43,9 @@ class HomeController {
         $viewRenderer = new ViewRenderer();
         $viewRenderer->render('View/pages/home', [
             'title' => 'BingoF1 - Accueil',
-            'actus' => $actus,
+            'actus' => $newsFeed['items'],
+            'actusStale' => $newsFeed['stale'],
+            'actusAvailable' => $newsFeed['available'],
             'course' => $courseData['course'],
             'status' => $courseData['status'],
             'hidePredictions' => $courseData['hidePredictions'],
@@ -55,30 +58,6 @@ class HomeController {
             'predictionNotice' => $predictionNotice,
             'csrfToken' => Csrf::token(),
         ]);
-    }
-
-    //Connexion webhook actus via motorsport.com
-    private function getActus(): array {
-        $actus = [];
-
-        try {
-            $rssUrl = 'https://fr.motorsport.com/rss/f1/news/';
-            $rss = @simplexml_load_file($rssUrl);
-
-            if ($rss) {
-                foreach ($rss->channel->item as $item) {
-                    $actus[] = [
-                        'title' => (string) $item->title,
-                        'link' => (string) $item->link,
-                        'date' => date('d/m H:i', strtotime((string) $item->pubDate))
-                    ];
-                }
-            }
-
-            return array_slice($actus, 0, 10);
-        } catch (\Exception $e) {
-            return [];
-        }
     }
 
     //Compte a rebours  

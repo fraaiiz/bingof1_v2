@@ -5,10 +5,15 @@ if (carousel) {
     const previousButton = carousel.querySelector('[data-previous]');
     const nextButton = carousel.querySelector('[data-next]');
     const position = carousel.querySelector('[data-position]');
+    const courseJump = document.querySelector('[data-course-jump]');
     const selectedIndex = cards.findIndex((card) => !card.hidden);
     let activeIndex = selectedIndex >= 0 ? selectedIndex : 0;
 
     function showCourse(index) {
+        if (!Number.isInteger(index) || index < 0 || index >= cards.length) {
+            return;
+        }
+
         activeIndex = index;
 
         cards.forEach((card, cardIndex) => {
@@ -23,9 +28,15 @@ if (carousel) {
         if (position) {
             position.textContent = `Course ${activeIndex + 1} / ${cards.length}`;
         }
+        if (courseJump) {
+            courseJump.value = String(activeIndex);
+        }
     }
 
     previousButton.addEventListener('click', () => showCourse(activeIndex - 1));
     nextButton.addEventListener('click', () => showCourse(activeIndex + 1));
+    courseJump?.addEventListener('change', () => {
+        showCourse(Number(courseJump.value));
+    });
     showCourse(activeIndex);
 }

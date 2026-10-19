@@ -55,3 +55,9 @@
     text-align: center;
     margin: 0;
 }
+
+@media (max-width: 1024px) {
+    .classement-content {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

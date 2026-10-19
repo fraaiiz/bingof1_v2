@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/assets/fonts/fonts.css">
     <?php $pageStylePath = __DIR__ . '/../../../public/assets/css/pages/' . $stylePage . '.css'; ?>
     <link rel="stylesheet" href="/assets/css/pages/<?= htmlspecialchars($stylePage) ?>.css?v=<?= file_exists($pageStylePath) ? filemtime($pageStylePath) : 0 ?>">
-
+</head>
 <body>
     <header>
         <img src="/assets/images/logo_bingof1.png" alt="logo_site">
@@ -48,22 +48,21 @@
             <li class="nav-item menu-item" tabindex="0">
                 <button type="button" aria-expanded="false">SAISONS</button>
                 <ul>
-                    <li class="nav-item submenu-item menu-item" tabindex="0">
-                        <button type="button" aria-expanded="false">2027</button>
-                        <ul>
-                            <li><a href="/saisons/2027/infos">INFOS</a></li>
-                            <li><a href="/saisons/2027/calendrier">CALENDRIER</a></li>
-                            <li><a href="/saisons/2027/classement">CLASSEMENT</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item submenu-item menu-item" tabindex="0">
-                        <button type="button" aria-expanded="false">2026</button>
-                        <ul>
-                            <li><a href="/saisons/2026/infos">INFOS</a></li>
-                            <li><a href="/saisons/2026/calendrier">CALENDRIER</a></li>
-                            <li><a href="/saisons/2026/classement">CLASSEMENT</a></li>
-                        </ul>
-                    </li>
+                    <?php if ($availableSeasons === []): ?>
+                        <li><span>Aucune saison disponible</span></li>
+                    <?php else: ?>
+                        <?php foreach ($availableSeasons as $seasonYear): ?>
+                            <?php $seasonPath = '/saisons/' . rawurlencode((string) $seasonYear); ?>
+                            <li class="nav-item submenu-item menu-item" tabindex="0">
+                                <button type="button" aria-expanded="false"><?= htmlspecialchars((string) $seasonYear, ENT_QUOTES, 'UTF-8') ?></button>
+                                <ul>
+                                    <li><a href="<?= $seasonPath ?>/infos">INFOS</a></li>
+                                    <li><a href="<?= $seasonPath ?>/calendrier">CALENDRIER</a></li>
+                                    <li><a href="<?= $seasonPath ?>/classement">CLASSEMENT</a></li>
+                                </ul>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </ul>
             </li>
 

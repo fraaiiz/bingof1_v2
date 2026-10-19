@@ -41,20 +41,33 @@
                     csrfToken: <?= json_encode($csrfToken ?? '', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>
                 };
             </script>
-            <script src="/assets/js/chat.js"></script>
+            <script src="/assets/js/chat.js?v=<?= filemtime(__DIR__ . '/../../../public/assets/js/chat.js') ?>"></script>
         </div>
 
         <div class="home-card-right">
             <div class="webhook-box">
                 <h3>Actualités</h3>
+                <?php if (!empty($actusStale)): ?>
+                    <p class="actus-status" role="status">Flux indisponible : affichage des dernières actualités mises en cache.</p>
+                <?php endif; ?>
                 <div class="actus-scroll">
-                            <?php foreach ($actus as $a): ?>
-                                <a href="<?= htmlspecialchars($a['link']) ?>" target="_blank" rel="noopener noreferrer" class="actu-line">
-                                    <div class="actu-title"><?= htmlspecialchars($a['title']) ?></div>
-                                    <div class="actu-date"><?= $a['date'] ?></div>
-                                </a>
-                            <?php endforeach; ?>
-                        </div>
+                    <?php if ($actus === []): ?>
+                        <p class="actus-status">
+                            <?= !empty($actusAvailable)
+                                ? 'Aucune actualité disponible pour le moment.'
+                                : 'Les actualités sont temporairement indisponibles.' ?>
+                        </p>
+                    <?php else: ?>
+                        <?php foreach ($actus as $a): ?>
+                            <a href="<?= htmlspecialchars($a['link'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" class="actu-line">
+                                <div class="actu-title"><?= htmlspecialchars($a['title'], ENT_QUOTES, 'UTF-8') ?></div>
+                                <?php if ($a['date'] !== ''): ?>
+                                    <div class="actu-date"><?= htmlspecialchars($a['date'], ENT_QUOTES, 'UTF-8') ?></div>
+                                <?php endif; ?>
+                            </a>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
              </div>
             <?php if (empty($hidePredictions)): ?>
                 <hr/>

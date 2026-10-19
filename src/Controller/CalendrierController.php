@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Database\Database;
+use App\Repository\SeasonRepository;
 use App\View\ViewRenderer;
 
 class CalendrierController {
@@ -66,9 +67,15 @@ class CalendrierController {
         ]);
     }
 
-    public function redirectToCurrentSeason() {
-        $currentYear = date('Y');
-        header("Location: /saisons/$currentYear/calendrier");
+    public function redirectToDefaultSeason(): void {
+        $seasonYear = (new SeasonRepository((new Database())->getConnection()))->findDefaultYear();
+        if ($seasonYear === null) {
+            http_response_code(404);
+            echo 'Aucune saison n’est disponible.';
+            return;
+        }
+
+        header('Location: /saisons/' . rawurlencode((string) $seasonYear) . '/calendrier');
         exit();
     }
 }

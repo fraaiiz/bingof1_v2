@@ -37,13 +37,6 @@ if (bingoForm) {
         });
     }
 
-    function updateProgress() {
-        const filled = Array.from({ length: 25 }, (_, index) => labelField(index + 1).value.trim())
-            .filter(Boolean).length;
-        const validated = Array.from({ length: 25 }, (_, index) => validatedField(index + 1).value === '1')
-            .filter(Boolean).length;
-        progress.textContent = `${filled}/25 cases remplies · ${validated}/25 validées`;
-    }
 
     function selectCell(position) {
         selectedPosition = position;
@@ -69,7 +62,6 @@ if (bingoForm) {
         const field = validatedField(position);
         field.value = field.value === '1' ? '0' : '1';
         updateCell(position);
-        updateProgress();
         if (position === selectedPosition) {
             selectCell(position);
         }
@@ -78,7 +70,6 @@ if (bingoForm) {
     labelInput.addEventListener('input', () => {
         labelField(selectedPosition).value = labelInput.value;
         updateCell(selectedPosition);
-        updateProgress();
     });
 
     cells.forEach((cell) => {
@@ -137,7 +128,6 @@ if (bingoForm) {
         }
     });
 
-    updateProgress();
     selectCell(selectedPosition);
 }
 

@@ -21,7 +21,20 @@ class ChatController
     public function index(): void
     {
         try {
-            $messages = $this->repository()->findVisible();
+            $repository = $this->repository();
+            if (array_key_exists('after_id', $_GET)) {
+                $messageId = filter_var($_GET['after_id'], FILTER_VALIDATE_INT, [
+                    'options' => ['min_range' => 0],
+                ]);
+                if ($messageId === false) {
+                    $this->respond(false, [], 'Identifiant de message invalide.');
+                    return;
+                }
+
+                $messages = $repository->findVisibleAfterId($messageId);
+            } else {
+                $messages = $repository->findVisible();
+            }
         } catch (PDOException $exception) {
             $this->respond(false, [], 'Erreur BDD.');
             return;

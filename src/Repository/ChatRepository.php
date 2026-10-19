@@ -19,31 +19,32 @@ class ChatRepository
                 FROM chat c
                 INNER JOIN users u ON u.id = c.user_id
                 WHERE c.is_deleted = 0
-                ORDER BY c.date_post DESC
+                ORDER BY c.id DESC
                 LIMIT :limit
             ) recent
-            ORDER BY date_post ASC'
+            ORDER BY id ASC'
         );
         $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
         $statement->execute();
 
-        $messages = [];
-        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
-            $isAdminMessage = (bool) $row['is_admin_message'];
-            $login = (string) $row['user_login'];
-            $postedAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', (string) $row['date_post']);
+        return $this->formatMessages($statement->fetchAll(PDO::FETCH_ASSOC));
+    }
 
-            $messages[] = [
-                'id' => (int) $row['id'],
-                'user_id' => (int) $row['user_id'],
-                'user_login' => $isAdminMessage ? 'Admin' : $login,
-                'date_post' => $postedAt instanceof \DateTimeImmutable ? $postedAt->format('d/m/Y H:i') : (string) $row['date_post'],
-                'message' => (string) $row['message'],
-                'is_admin' => $isAdminMessage || strcasecmp($login, 'admin') === 0,
-            ];
-        }
+    public function findVisibleAfterId(int $messageId, int $limit = 200): array
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT c.id, c.user_id, u.user_login, c.message, c.date_post, c.is_admin_message
+            FROM chat c
+            INNER JOIN users u ON u.id = c.user_id
+            WHERE c.is_deleted = 0 AND c.id > :message_id
+            ORDER BY c.id ASC
+            LIMIT :limit'
+        );
+        $statement->bindValue(':message_id', $messageId, PDO::PARAM_INT);
+        $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $statement->execute();
 
-        return $messages;
+        return $this->formatMessages($statement->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function insert(int $userId, string $message, bool $isAdminMessage): void
@@ -72,5 +73,26 @@ class ChatRepository
         ]);
 
         return $statement->rowCount() > 0;
+    }
+
+    private function formatMessages(array $rows): array
+    {
+        $messages = [];
+        foreach ($rows as $row) {
+            $isAdminMessage = (bool) $row['is_admin_message'];
+            $login = (string) $row['user_login'];
+            $postedAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', (string) $row['date_post']);
+
+            $messages[] = [
+                'id' => (int) $row['id'],
+                'user_id' => (int) $row['user_id'],
+                'user_login' => $isAdminMessage ? 'Admin' : $login,
+                'date_post' => $postedAt instanceof \DateTimeImmutable ? $postedAt->format('d/m/Y H:i') : (string) $row['date_post'],
+                'message' => (string) $row['message'],
+                'is_admin' => $isAdminMessage || strcasecmp($login, 'admin') === 0,
+            ];
+        }
+
+        return $messages;
     }
 }
