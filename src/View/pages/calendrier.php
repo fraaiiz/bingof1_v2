@@ -22,8 +22,12 @@
                     $isSelected = $index === $selectedCourseIndex;
                     $dateDebut = new DateTimeImmutable($course['date_fp1']);
                     $dateCourse = new DateTimeImmutable($course['date_course']);
-                    $imagePath = '/' . ltrim($course['image_trace'], '/');
-                    if (strpos($imagePath, '/assets/') !== 0) {
+                    $lieuCircuit = (string) ($course['circuit_pays'] ?? '');
+                    if (($course['circuit_ville'] ?? '') !== '') {
+                        $lieuCircuit .= ' (' . $course['circuit_ville'] . ')';
+                    }
+                    $imagePath = '/' . ltrim((string) ($course['circuit_image'] ?? ''), '/');
+                    if ($imagePath !== '/' && strpos($imagePath, '/assets/') !== 0) {
                         $imagePath = '/assets' . $imagePath;
                     }
                     $informations = [
@@ -45,7 +49,7 @@
                                 <p class="circuit-dates">
                                     <?= $dateDebut->format('d/m/Y') ?> - <?= $dateCourse->format('d/m/Y') ?>
                                 </p>
-                                <p class="circuit-country"><?= htmlspecialchars($course['pays_circuit']) ?></p>
+                                <p class="circuit-country"><?= htmlspecialchars($lieuCircuit) ?></p>
                                 
                                 <?php if (array_filter($informations, static fn ($value) => $value !== null && $value !== '') !== []): ?>
                                     <div class="circuit-meta">
@@ -59,10 +63,10 @@
                             </div>
 
                             <div class="circuit-visual">
-                                <?php if (!empty($course['image_trace'])): ?>
+                                <?php if (!empty($course['circuit_image'])): ?>
                                     <img src="<?= htmlspecialchars($imagePath, ENT_QUOTES, 'UTF-8') ?>" alt="Tracé du circuit <?= htmlspecialchars($course['nom_circuit']) ?>" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                 <?php endif; ?>
-                                <div class="trace-placeholder"<?= !empty($course['image_trace']) ? '' : ' style="display: flex"' ?> aria-label="Image du circuit non disponible">
+                                <div class="trace-placeholder"<?= !empty($course['circuit_image']) ? '' : ' style="display: flex"' ?> aria-label="Image du circuit non disponible">
                                     <?= htmlspecialchars($course['nom_circuit']) ?>
                                 </div>
                             </div>

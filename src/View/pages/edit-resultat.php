@@ -53,7 +53,13 @@ foreach ($pilotes as $pilote) {
     <header>
         <p class="edit-resultat-round">Manche <?= htmlspecialchars((string) $course['num_manche'], ENT_QUOTES, 'UTF-8') ?></p>
         <h1>Éditer les résultats</h1>
-        <p class="edit-resultat-course"><?= htmlspecialchars($course['nom_circuit'], ENT_QUOTES, 'UTF-8') ?> - <?= htmlspecialchars($course['pays_circuit'], ENT_QUOTES, 'UTF-8') ?></p>
+        <?php
+        $lieuCircuit = (string) ($course['circuit_pays'] ?? '');
+        if (($course['circuit_ville'] ?? '') !== '') {
+            $lieuCircuit .= ' (' . $course['circuit_ville'] . ')';
+        }
+        ?>
+        <p class="edit-resultat-course"><?= htmlspecialchars($course['nom_circuit'], ENT_QUOTES, 'UTF-8') ?> - <?= htmlspecialchars($lieuCircuit, ENT_QUOTES, 'UTF-8') ?></p>
         <p class="edit-resultat-year">Saison <?= htmlspecialchars((string) $annee, ENT_QUOTES, 'UTF-8') ?></p>
     </header>
     <?php if ($notice !== null): ?>

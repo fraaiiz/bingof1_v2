@@ -23,7 +23,13 @@ $sessionDefinitions = [
 	<a class="resultat-back" href="/saisons/<?= rawurlencode((string) $annee) ?>/calendrier">Retour au calendrier <?= htmlspecialchars((string) $annee, ENT_QUOTES, 'UTF-8') ?></a>
 	<header class="resultat-header">
 		<p class="resultat-round">Manche <?= htmlspecialchars((string) $course['num_manche'], ENT_QUOTES, 'UTF-8') ?></p>
-		<h1>Résultats du circuit <?= htmlspecialchars($course['pays_circuit'], ENT_QUOTES, 'UTF-8') ?></h1>
+		<?php
+		$lieuCircuit = (string) ($course['circuit_pays'] ?? '');
+		if (($course['circuit_ville'] ?? '') !== '') {
+			$lieuCircuit .= ' (' . $course['circuit_ville'] . ')';
+		}
+		?>
+		<h1>Résultats du circuit <?= htmlspecialchars($lieuCircuit, ENT_QUOTES, 'UTF-8') ?></h1>
 		<p class="resultat-circuit"><?= htmlspecialchars($course['nom_circuit'], ENT_QUOTES, 'UTF-8') ?></p>
 		<p class="resultat-dates"><?= $dateDebut->format('d/m/Y') ?> - <?= $dateCourse->format('d/m/Y') ?></p>
 	</header>

@@ -187,6 +187,13 @@ nav li.menu-item > button {
         letter-spacing: clamp(0em, 0.015em, 0.04em);
     }
 
+    nav > ul#primary-navigation.has-admin .nav-item > span,
+    nav > ul#primary-navigation.has-admin .nav-item > button,
+    nav > ul#primary-navigation.has-admin > li > form > button,
+    nav > ul#primary-navigation.has-admin > li.menu-item > button {
+        font-size: clamp(0.48rem, calc((100vw - 4.5rem) / 55), 1.35rem);
+    }
+
     nav > ul#primary-navigation > .menu-item,
     nav > ul#primary-navigation > .menu-item > button,
     nav > ul#primary-navigation > .menu-item > span {
@@ -274,6 +281,17 @@ nav li.menu-item > button {
                 1.35rem
             );
             letter-spacing: 0.02em;
+        }
+
+        nav > ul#primary-navigation.has-admin .nav-item > span,
+        nav > ul#primary-navigation.has-admin .nav-item > button,
+        nav > ul#primary-navigation.has-admin > li > form > button,
+        nav > ul#primary-navigation.has-admin > li.menu-item > button {
+            font-size: clamp(
+                0.48rem,
+                calc((100cqi / 8 - 0.625rem) / 8),
+                1.35rem
+            );
         }
     }
 }

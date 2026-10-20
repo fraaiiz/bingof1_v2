@@ -19,6 +19,8 @@ use App\Controller\EditResultatController;
 use App\Controller\LoginController;
 use App\Controller\PredictionController;
 use App\Controller\RegisterController;
+use App\Controller\AdminController;
+use App\Controller\AdminSeasonController;
 
 $router = new Router();
 
@@ -45,6 +47,16 @@ $router->post('/saisons/{annee}/courses/{id}/resultats/edition', [new EditResult
 $router->get('/login', [new LoginController(), 'index']);
 $router->post('/login', [new LoginController(), 'authenticate']);
 $router->post('/logout', [new LoginController(), 'logout']);
+
+$router->get('/admin', [new AdminController(), 'index']);
+$router->get('/admin/saisons', [new AdminSeasonController(), 'index']);
+$router->post('/admin/saisons', [new AdminSeasonController(), 'prepare']);
+$router->post('/admin/saisons/confirmation', [new AdminSeasonController(), 'confirm']);
+$router->get('/admin/saisons/{id}', [new AdminSeasonController(), 'show']);
+$router->get('/admin/saisons/{id}/courses/{courseId}', [new AdminSeasonController(), 'edit']);
+$router->post('/admin/saisons/{id}/courses', [new AdminSeasonController(), 'prepareCourse']);
+$router->post('/admin/saisons/{id}/courses/{courseId}', [new AdminSeasonController(), 'prepareCourseUpdate']);
+$router->post('/admin/saisons/{id}/courses/{courseId}/suppression', [new AdminSeasonController(), 'prepareCourseDelete']);
 
 $router->get('/register', [new RegisterController(), 'index']);
 $router->post('/register', [new RegisterController(), 'store']);

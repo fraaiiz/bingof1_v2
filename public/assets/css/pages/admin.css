@@ -1,0 +1,91 @@
+.admin-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    width: min(100%, 960px);
+    margin: 0 auto;
+    padding: 8px 0 24px;
+}
+
+.admin-page h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.admin-groups {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    width: 100%;
+}
+
+.admin-group h2 {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.admin-page nav {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+}
+
+.admin-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.admin-page .admin-actions > li {
+    display: block;
+    width: 100%;
+}
+
+.admin-page .admin-actions > li + li {
+    margin-top: 8px;
+}
+
+.admin-page .admin-actions > li > a.admin-action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: 44px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #970008;
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+}
+
+.admin-page .admin-actions > li > a.admin-action-button:hover {
+    background: #b80d17;
+}
+
+.admin-page .admin-actions > li > a.admin-action-button:focus-visible {
+    outline: 2px solid #f2c66d;
+    outline-offset: 2px;
+}
+
+@media (min-width: 800px) {
+    .admin-groups {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: start;
+        gap: 32px;
+    }
+}

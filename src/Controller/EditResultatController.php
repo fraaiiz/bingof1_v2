@@ -226,9 +226,13 @@ class EditResultatController
         }
 
         $statement = $pdo->prepare(
-            'SELECT courses.*
+            'SELECT courses.*,
+                circuits.pays AS circuit_pays,
+                circuits.ville AS circuit_ville,
+                circuits.image AS circuit_image
             FROM courses
             INNER JOIN saisons ON saisons.id = courses.id_saison
+            LEFT JOIN circuits ON circuits.id = courses.circuit_id
             WHERE saisons.annee = :annee AND courses.id = :id'
         );
         $statement->execute([':annee' => $annee, ':id' => $id]);

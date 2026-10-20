@@ -1,0 +1,396 @@
+.admin-seasons {
+    width: min(100%, 960px);
+    margin: 0 auto;
+    padding: 8px 0 24px;
+    text-align: left;
+}
+
+.admin-seasons h1,
+.admin-seasons h2 {
+    margin: 0;
+    text-align: center;
+}
+
+.admin-seasons h1 {
+    font-size: 2rem;
+}
+
+.admin-seasons-back {
+    margin: 0 0 16px;
+}
+
+.admin-seasons-back a {
+    color: #f6d9db;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.admin-seasons-back a:hover {
+    text-decoration: underline;
+}
+
+.admin-seasons-notice {
+    margin: 20px 0 0;
+    padding: 12px 14px;
+    border-radius: 8px;
+}
+
+.admin-seasons-notice--success {
+    background: rgba(80, 140, 90, 0.25);
+    border: 1px solid rgba(170, 220, 170, 0.55);
+}
+
+.admin-seasons-notice--error {
+    background: rgba(151, 0, 8, 0.28);
+    border: 1px solid rgba(255, 150, 150, 0.55);
+}
+
+.admin-seasons-create,
+.admin-seasons-edit,
+.admin-seasons-delete,
+.admin-seasons-confirm-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-seasons-create {
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.admin-seasons-create label {
+    font-weight: 700;
+}
+
+.admin-seasons input[type="number"] {
+    box-sizing: border-box;
+    width: 7rem;
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+}
+
+.admin-seasons button {
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #970008;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-seasons button:hover {
+    background: #b80d17;
+}
+
+.admin-seasons button:focus-visible,
+.admin-seasons input:focus-visible,
+.admin-seasons a:focus-visible {
+    outline: 2px solid #f2c66d;
+    outline-offset: 2px;
+}
+
+.admin-seasons button.admin-seasons-cancel {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.admin-seasons button.admin-seasons-cancel:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-seasons-table-wrap {
+    margin-top: 28px;
+    overflow-x: auto;
+}
+
+.admin-seasons-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-seasons-table th,
+.admin-seasons-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.admin-seasons-table th {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.admin-seasons-table td:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-seasons-table td:last-child form {
+    display: contents;
+}
+
+.admin-seasons-table td:last-child a.admin-seasons-open,
+.admin-seasons-table td:last-child button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 9rem;
+}
+
+a.admin-seasons-open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #970008;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+a.admin-seasons-open:hover {
+    background: #b80d17;
+}
+
+.admin-seasons-delete-season {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.admin-seasons-current td {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.admin-course-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.admin-course-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+a.admin-course-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+a.admin-course-back:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-course-form h2,
+.admin-course-form legend {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.admin-course-form fieldset {
+    margin: 0;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+
+.admin-course-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.admin-course-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.admin-course-fields label[hidden] {
+    display: none;
+}
+
+.admin-course-fields input,
+.admin-course-fields select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+    font-weight: 400;
+}
+
+.admin-seasons-help,
+.admin-seasons-empty {
+    margin: 16px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 400;
+}
+
+.admin-course-fields .admin-seasons-help {
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.admin-trace-field,
+.admin-course-fields > .admin-circuit-results,
+.admin-course-fields > .admin-seasons-help,
+.admin-course-fields > .admin-trace-preview,
+.admin-course-fields > .admin-seasons-cancel,
+.admin-new-circuit {
+    grid-column: 1 / -1;
+}
+
+.admin-course-fields > .admin-seasons-cancel {
+    justify-self: start;
+}
+
+.admin-circuit-results {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-circuit-results[hidden],
+.admin-new-circuit[hidden] {
+    display: none;
+}
+
+.admin-seasons button.admin-circuit-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: inherit;
+    font-weight: 400;
+    text-align: left;
+}
+
+.admin-seasons button.admin-circuit-result:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-circuit-result img {
+    width: 120px;
+    height: 68px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.admin-new-circuit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.admin-trace-preview {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.admin-trace-preview[hidden] {
+    display: none;
+}
+
+.admin-trace-preview img {
+    width: 280px;
+    max-width: 100%;
+    height: 160px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.admin-trace-preview [data-trace-name] {
+    font-weight: 400;
+    overflow-wrap: anywhere;
+}
+
+.admin-seasons-confirm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+
+.admin-seasons-confirm p,
+.admin-seasons-usage {
+    margin: 0;
+}
+
+.admin-seasons-usage {
+    padding-left: 1.2rem;
+}
+
+.admin-seasons-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 700px) {
+    .admin-seasons-create,
+    .admin-seasons-confirm-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-seasons-create input,
+    .admin-seasons-create button,
+    .admin-seasons-confirm-actions button {
+        width: 100%;
+    }
+}
