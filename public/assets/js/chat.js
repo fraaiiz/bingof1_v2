@@ -127,6 +127,9 @@ async function syncMessages(forceFull = false) {
         }
 
         renderMessages(data.messages, shouldFullSync);
+        if (typeof data.chat_open === 'boolean') {
+            applyChatAvailability(data.chat_open);
+        }
         showChatError('');
         hasLoadedMessages = true;
         if (shouldFullSync) {
@@ -148,6 +151,22 @@ async function syncMessages(forceFull = false) {
             scheduleNextSync();
         }
     }
+}
+
+function applyChatAvailability(open) {
+    const closed = document.getElementById('chatClosed');
+    if (closed) {
+        closed.hidden = open;
+    }
+    if (form) {
+        form.hidden = !open;
+    }
+    document.querySelectorAll('.chat-login').forEach((element) => {
+        if (element.id === 'chatClosed') {
+            return;
+        }
+        element.hidden = !open;
+    });
 }
 
 function scheduleNextSync() {
@@ -224,15 +243,18 @@ if (form && input) {
             body,
         })
             .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    input.value = '';
-                    showChatError('');
-                    syncMessages();
-                    return;
-                }
-                showChatError(data.error || 'Envoi impossible.');
-            })
+        .then((data) => {
+            if (typeof data.chat_open === 'boolean') {
+                applyChatAvailability(data.chat_open);
+            }
+            if (data.success) {
+                input.value = '';
+                showChatError('');
+                syncMessages();
+                return;
+            }
+            showChatError(data.error || 'Envoi impossible.');
+        })
             .catch((error) => console.error('Erreur fetch POST:', error));
     });
 }

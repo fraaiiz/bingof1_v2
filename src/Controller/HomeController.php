@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Database\Database;
 use App\Repository\PredictionRepository;
+use App\Repository\SiteSettingsRepository;
 use App\Service\Csrf;
 use App\Service\NewsFeed;
 use App\View\ViewRenderer;
@@ -48,7 +49,6 @@ class HomeController {
             'actusAvailable' => $newsFeed['available'],
             'course' => $courseData['course'],
             'status' => $courseData['status'],
-            'hidePredictions' => $courseData['hidePredictions'],
             'isLoggedIn' => $userId !== null,
             'userRole' => $_SESSION['user_role'] ?? '',
             'drivers' => $drivers,
@@ -56,15 +56,25 @@ class HomeController {
             'participantPredictions' => $participantPredictions,
             'predictionOpen' => $predictionOpen,
             'predictionNotice' => $predictionNotice,
+            'chatOpen' => $this->chatOpen(),
             'csrfToken' => Csrf::token(),
         ]);
+    }
+
+    private function chatOpen(): bool
+    {
+        try {
+            return (new SiteSettingsRepository((new Database())->getConnection()))->isChatOpen();
+        } catch (\PDOException $exception) {
+            error_log('Unable to read chat setting: ' . $exception->getMessage());
+            return true;
+        }
     }
 
     //Compte a rebours  
     private function getNextCourseData(): array {
         $course = null;
         $status = 'a_venir';
-        $hidePredictions = false;
 
         try {
             //Connexion BDD
@@ -82,23 +92,16 @@ class HomeController {
                 $stmt = $pdo->prepare("SELECT id, nom_circuit, date_fp1, date_course FROM courses WHERE is_cancelled = 'no' AND date_fp1 > :now ORDER BY date_fp1 ASC LIMIT 1");
                 $stmt->execute([':now' => $now]);
                 $course = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-                $yesterday = date('Y-m-d', strtotime('-1 day'));
-                $stmt = $pdo->prepare("SELECT 1 FROM courses WHERE is_cancelled = 'no' AND DATE(date_course) = :yesterday LIMIT 1");
-                $stmt->execute([':yesterday' => $yesterday]);
-                $hidePredictions = $stmt->fetchColumn() !== false;
             }
 
         } catch (\Exception $e) {
             $course = null;
             $status = 'a_venir';
-            $hidePredictions = false;
         }
 
         return [
             'course' => $course,
             'status' => $status,
-            'hidePredictions' => $hidePredictions,
         ];
     }
 }

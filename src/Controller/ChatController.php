@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Database\Database;
 use App\Repository\ChatRepository;
+use App\Repository\SiteSettingsRepository;
 use App\Service\Csrf;
 use PDOException;
 
@@ -101,6 +102,11 @@ class ChatController
 
     private function publish(ChatRepository $repository): void
     {
+        if (!$this->chatOpen()) {
+            $this->respond(false, [], 'Le salon est fermé.');
+            return;
+        }
+
         $userId = $this->currentUserId();
         if ($userId === null) {
             $this->respond(false, [], 'Vous devez être connecté pour poster un message.');
@@ -169,6 +175,16 @@ class ChatController
         return new ChatRepository((new Database())->getConnection());
     }
 
+    private function chatOpen(): bool
+    {
+        try {
+            return (new SiteSettingsRepository((new Database())->getConnection()))->isChatOpen();
+        } catch (PDOException $exception) {
+            error_log('Unable to read chat setting: ' . $exception->getMessage());
+            return true;
+        }
+    }
+
     private function currentUserId(): ?int
     {
         if (empty($_SESSION['user_id'])) {
@@ -208,6 +224,7 @@ class ChatController
             'success' => $success,
             'messages' => $messages,
             'error' => $error,
+            'chat_open' => $this->chatOpen(),
         ], JSON_UNESCAPED_UNICODE);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ErrorPage;
 use App\Database\Database;
 use App\Repository\SeasonRepository;
 use App\View\ViewRenderer;
@@ -26,9 +27,7 @@ class ClassementController
         $seasonId = $seasonStatement->fetchColumn();
 
         if ($seasonId === false) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
 
         $teamsStatement = $pdo->prepare(
@@ -194,9 +193,7 @@ class ClassementController
     {
         $seasonYear = (new SeasonRepository((new Database())->getConnection()))->findDefaultYear();
         if ($seasonYear === null) {
-            http_response_code(404);
-            echo 'Aucune saison n’est disponible.';
-            return;
+            ErrorPage::notFound();
         }
 
         header('Location: /saisons/' . rawurlencode((string) $seasonYear) . '/classement');

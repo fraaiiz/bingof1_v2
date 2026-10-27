@@ -1,0 +1,125 @@
+.contact-page {
+    width: min(100%, 860px);
+    margin: 0 auto;
+    padding: 8px 0 24px;
+    text-align: left;
+}
+
+.contact-page h1,
+.contact-page h2 {
+    margin: 0;
+    text-align: center;
+}
+
+.contact-page h1 {
+    font-size: 2rem;
+}
+
+.contact-notice {
+    margin: 20px 0 0;
+    padding: 12px 14px;
+    border-radius: 8px;
+}
+
+.contact-notice--success {
+    background: rgba(80, 140, 90, 0.25);
+    border: 1px solid rgba(170, 220, 170, 0.55);
+}
+
+.contact-notice--error {
+    background: rgba(151, 0, 8, 0.28);
+    border: 1px solid rgba(255, 150, 150, 0.55);
+}
+
+.contact-form,
+.contact-tickets {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.contact-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.contact-form label[hidden] {
+    display: none;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+    font-weight: 400;
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form button {
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #970008;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background: #b80d17;
+}
+
+.contact-form button:focus-visible,
+.contact-form input:focus-visible,
+.contact-form select:focus-visible,
+.contact-form textarea:focus-visible,
+.contact-page a:focus-visible {
+    outline: 2px solid #f2c66d;
+    outline-offset: 2px;
+}
+
+.contact-help {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 400;
+}
+
+.contact-table-wrap {
+    overflow-x: auto;
+}
+
+.contact-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.contact-table th,
+.contact-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    text-align: left;
+    vertical-align: top;
+}
+
+.contact-table th {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}

@@ -1,5 +1,27 @@
 RewriteEngine On
 
+# 🔁 Force HTTPS (Supprimer # en prod)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://bingof1.fr/$1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
+
+
+<IfModule mod_headers.c>
+
+# HSTS : ignoré par le navigateur tant que la réponse n'est pas en HTTPS
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+# Anti clickjacking
+Header always set X-Frame-Options "DENY"
+Header always set Content-Security-Policy "frame-ancestors 'none'"
+
+# Anti MIME sniffing
+Header always set X-Content-Type-Options "nosniff"
+
+# Referrer Policy
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+</IfModule>

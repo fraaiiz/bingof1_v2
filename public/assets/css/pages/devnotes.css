@@ -1,0 +1,130 @@
+.devnotes-page {
+    width: min(100%, 900px);
+    margin: 0 auto;
+    padding: 8px 0 12px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.devnotes-page h2 {
+    margin: 8px 0 16px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.devnotes-page h2 + p,
+.devnotes-intro p {
+    margin: 0 0 12px;
+}
+
+.devnotes-page h2.devnotes-notes {
+    margin-top: 28px;
+}
+
+.devnotes-version + .devnotes-version {
+    margin-top: 12px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.devnotes-version-title {
+    margin: 12px 0 4px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.devnotes-version-label {
+    margin: 0 0 8px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.devnote-day {
+    margin: 20px;
+    padding: 25px 30px;
+    text-align: left;
+    background: #343a40;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.devnote-day:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.devnote-date {
+    margin: 0 0 15px;
+    padding-left: 10px;
+    border-left: 4px solid #970008;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.devnote-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.devnote-list li {
+    position: relative;
+    margin-bottom: 10px;
+    padding: 10px 12px 10px 35px;
+    border-radius: 6px;
+    background: #2b2f33;
+    font-size: 15px;
+    text-align: left;
+}
+
+.devnote-list li:last-child {
+    margin-bottom: 0;
+}
+
+.devnote-list li::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.tag-feature::before {
+    background: #00c853;
+}
+
+.tag-fix::before {
+    background: #ff3d00;
+}
+
+.tag-improve::before {
+    background: #2979ff;
+}
+
+.tag-security::before {
+    background: #aa00ff;
+}
+
+@media (max-width: 600px) {
+    .devnote-day {
+        margin: 16px 0;
+        padding: 20px;
+    }
+
+    .devnote-date {
+        font-size: 18px;
+    }
+
+    .devnote-list li {
+        font-size: 14px;
+    }
+}

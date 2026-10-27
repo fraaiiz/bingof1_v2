@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ErrorPage;
 use App\Database\Database;
 use App\Repository\CircuitRepository;
 use App\Repository\CourseRepository;
@@ -60,9 +61,7 @@ class AdminSeasonController
 
         $seasonId = $this->validateId($id);
         if ($seasonId === null) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
 
         $this->redirectIfPendingBelongsElsewhere($seasonId);
@@ -71,9 +70,7 @@ class AdminSeasonController
             $repository = $this->repository();
             $season = $repository->find($seasonId);
             if ($season === null) {
-                http_response_code(404);
-                echo '404 Not Found';
-                return;
+                ErrorPage::notFound();
             }
             $courses = $this->courses()->findBySeason($seasonId);
             $confirmation = $this->resolvePending($repository);
@@ -103,9 +100,7 @@ class AdminSeasonController
         $seasonId = $this->validateId($id);
         $editedCourseId = $this->validateId($courseId);
         if ($seasonId === null || $editedCourseId === null) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
 
         $pending = $_SESSION['admin_season_pending'] ?? null;
@@ -123,9 +118,7 @@ class AdminSeasonController
             $season = $repository->find($seasonId);
             $editedCourse = $season === null ? null : $this->courses()->findInSeason($seasonId, $editedCourseId);
             if ($season === null || $editedCourse === null) {
-                http_response_code(404);
-                echo '404 Not Found';
-                return;
+                ErrorPage::notFound();
             }
             $courses = $this->courses()->findBySeason($seasonId);
             $sessionTypesByFormat = $this->courses()->findSessionTypesByFormat();
@@ -205,9 +198,7 @@ class AdminSeasonController
 
         $seasonId = $this->validateId($id);
         if ($seasonId === null) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
 
         $this->queueCourse($seasonId, null);
@@ -222,9 +213,7 @@ class AdminSeasonController
         $seasonId = $this->validateId($id);
         $editedCourseId = $this->validateId($courseId);
         if ($seasonId === null || $editedCourseId === null) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
 
         $this->queueCourse($seasonId, $editedCourseId);
@@ -240,9 +229,7 @@ class AdminSeasonController
         $deletedCourseId = $this->validateId($courseId);
         $location = '/admin/saisons/' . (int) $seasonId;
         if ($seasonId === null || $deletedCourseId === null) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
 
         if (!Csrf::isValid($_POST['csrf_token'] ?? null)) {
@@ -439,7 +426,7 @@ class AdminSeasonController
         $notice = $_SESSION['admin_season_notice'] ?? null;
         unset($_SESSION['admin_season_notice']);
 
-        (new ViewRenderer())->render('View/pages/admin-saisons', [
+        (new ViewRenderer())->render('View/pages/admin/admin-saisons', [
             'title' => $season === null
                 ? 'BingoF1 - Saisons'
                 : 'BingoF1 - Saison ' . $season['annee'],

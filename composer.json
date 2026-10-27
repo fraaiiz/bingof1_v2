@@ -7,5 +7,7 @@
             "App\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "phpmailer/phpmailer": "^7.1"
+    }
 }

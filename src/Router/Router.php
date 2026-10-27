@@ -2,6 +2,8 @@
 
 namespace App\Router;
 
+use App\Service\ErrorPage;
+
 class Router {
     private array $routes = [];
 
@@ -42,8 +44,7 @@ class Router {
             }
         }
 
-        http_response_code(404);
-        echo "404 Not Found";
+        ErrorPage::notFound();
     }
 
     public function get(string $path, callable $handler): void {

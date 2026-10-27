@@ -10,6 +10,13 @@ services:
       MARIADB_DATABASE: ${MARIADB_DATABASE}
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_FROM: ${MAIL_FROM}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+      APP_URL: ${APP_URL}
 
     ports:
       - "8080:80"
@@ -44,7 +51,7 @@ services:
       PMA_PORT: 3306
 
     ports:
-      - "8081:80"
+      - "127.0.0.1:8081:80"
 
     depends_on:
       - db

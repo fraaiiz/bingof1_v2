@@ -1,0 +1,46 @@
+.cgu-page {
+    width: min(100%, 820px);
+    margin: 0 auto;
+    padding: 8px 0 12px;
+    text-align: left;
+    line-height: 1.6;
+}
+
+.cgu-page h1,
+.cgu-updated {
+    text-align: center;
+}
+
+.cgu-page h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.cgu-updated {
+    margin: 8px 0 0;
+    font-size: 0.95rem;
+}
+
+.cgu-page h2 {
+    margin: 32px 0 10px;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.cgu-page p,
+.cgu-page ul {
+    margin: 0 0 12px;
+}
+
+.cgu-page ul {
+    padding-left: 1.25rem;
+}
+
+.cgu-page li + li {
+    margin-top: 6px;
+}
+
+.cgu-page a {
+    color: #fff;
+    font-weight: 700;
+}

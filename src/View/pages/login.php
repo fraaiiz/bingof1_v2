@@ -4,6 +4,10 @@
             <h1>Connexion</h1>
         </div>
 
+        <?php if (!empty($authNotice)): ?>
+            <p class="auth-notice" role="status"><?= htmlspecialchars($authNotice, ENT_QUOTES, 'UTF-8') ?></p>
+        <?php endif; ?>
+
         <?php if (!empty($authError)): ?>
             <p class="auth-error" role="alert"><?= htmlspecialchars($authError, ENT_QUOTES, 'UTF-8') ?></p>
         <?php endif; ?>
@@ -17,17 +21,23 @@
 
             <div class="form-group">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" id="password" name="password" class="form-control" autocomplete="current-password" placeholder="••••••••" required>
+                <div class="password-field">
+                    <input type="password" id="password" name="password" class="form-control" autocomplete="current-password" placeholder="••••••••" required>
+                    <?php require __DIR__ . '/../partials/password-toggle.php'; ?>
+                </div>
             </div>
 
+            
             <button type="submit" class="btn btn-primary w-100">
                 Se connecter
             </button>
-
+            
+            <p class="login-footer login-forgot"><a href="/mot-de-passe-oublie">Mot de passe oublié ?</a></p>
             <p class="login-footer mt-3 mb-0">
                 Pas encore de compte ?
                 <a href="/register">Créer un compte</a>
             </p>
         </form>
+        <script src="/assets/js/password-toggle.js?v=<?= filemtime(__DIR__ . '/../../../public/assets/js/password-toggle.js') ?>" defer></script>
     </div>
 </section>

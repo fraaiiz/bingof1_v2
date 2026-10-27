@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Database\Database;
 use App\Service\Csrf;
+use App\Service\PasswordRules;
+use App\Service\RateLimiter;
 use App\View\ViewRenderer;
 
 class RegisterController
 {
     public function index(): void
     {
+        RateLimiter::denyWhenLimited('register', 5, 3600);
         $authError = $_SESSION['auth_error'] ?? null;
         unset($_SESSION['auth_error']);
 
@@ -43,13 +46,22 @@ class RegisterController
             $this->redirectWithError('Vérifiez le pseudo et l’adresse email.');
         }
 
-        if (strlen($password) < 8 || $password !== $passwordConfirmation) {
-            $this->redirectWithError('Le mot de passe doit faire au moins 8 caractères et les deux saisies doivent correspondre.');
+        if (!PasswordRules::isComplex($password)) {
+            $this->redirectWithError('Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.');
+        }
+
+        if ($password !== $passwordConfirmation) {
+            $this->redirectWithError('Les deux mots de passe sont différents.');
         }
 
         try {
             $database = new Database();
             $pdo = $database->getConnection();
+            $limiter = new RateLimiter($pdo);
+            if ($limiter->tooMany('register', RateLimiter::clientIp(), 5, 3600)) {
+                RateLimiter::deny('register', 3600);
+            }
+            $limiter->hit('register', RateLimiter::clientIp());
             $stmt = $pdo->prepare(
                 'INSERT INTO users (user_login, user_email, user_password, user_role)
                 VALUES (:login, :email, :password, \'user\')'
@@ -62,7 +74,7 @@ class RegisterController
             $userId = (int) $pdo->lastInsertId();
         } catch (\PDOException $exception) {
             if ($exception->getCode() === '23000') {
-                $this->redirectWithError('Ce pseudo ou cette adresse email est déjà utilisé.');
+                $this->redirectWithError('Erreur au moment de l’inscription.');
             }
             $this->redirectWithError('Inscription indisponible. Réessayez plus tard.');
         }
@@ -71,6 +83,7 @@ class RegisterController
         $_SESSION['user_id'] = $userId;
         $_SESSION['user_login'] = $login;
         $_SESSION['user_role'] = 'user';
+        $_SESSION['auth_version'] = 1;
 
         header('Location: /');
         exit();

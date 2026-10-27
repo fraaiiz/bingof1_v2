@@ -22,16 +22,24 @@
 
             <div class="form-group">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" id="password" name="password" class="form-control" minlength="8" autocomplete="new-password" required>
+                <div class="password-field">
+                    <input type="password" id="password" name="password" class="form-control" autocomplete="new-password" required>
+                    <?php require __DIR__ . '/../partials/password-toggle.php'; ?>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="password-confirmation" class="form-label">Confirmer le mot de passe</label>
-                <input type="password" id="password-confirmation" name="password_confirmation" class="form-control" minlength="8" autocomplete="new-password" required>
+                <div class="password-field">
+                    <input type="password" id="password-confirmation" name="password_confirmation" class="form-control" autocomplete="new-password" required>
+                    <?php require __DIR__ . '/../partials/password-toggle.php'; ?>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary w-100">Créer mon compte</button>
             <p class="login-footer mt-3 mb-0"><a href="/login">Déjà un compte ? Se connecter</a></p>
         </form>
+        <script src="/assets/js/password-rules.js?v=<?= filemtime(__DIR__ . '/../../../public/assets/js/password-rules.js') ?>" defer></script>
+        <script src="/assets/js/password-toggle.js?v=<?= filemtime(__DIR__ . '/../../../public/assets/js/password-toggle.js') ?>" defer></script>
     </div>
 </section>

@@ -392,6 +392,11 @@ footer {
     border-radius: 15px;
 }
 
+footer a {
+    color: #fff;
+    font-weight: 700;
+}
+
 @media (max-width: 700px) {
     nav {
         position: static;

@@ -26,13 +26,14 @@
                 <div id="chatbox" class="chat-messages" aria-live="polite">
                     <div id="messages"></div>
                 </div>
+                <p id="chatClosed" class="chat-login"<?= !empty($chatOpen) ? ' hidden' : '' ?>>Le salon est fermé.</p>
                 <?php if ($isLoggedIn): ?>
-                    <form id="messageForm" class="chat-form">
+                    <form id="messageForm" class="chat-form"<?= empty($chatOpen) ? ' hidden' : '' ?>>
                         <input type="text" name="message" placeholder="Entrez votre message" autocomplete="off" maxlength="300" required>
                         <button type="submit">Envoyer</button>
                     </form>
                 <?php else: ?>
-                    <p class="chat-login">Connectez-vous pour participer au salon. <a href="/login">Connexion</a></p>
+                    <p class="chat-login"<?= empty($chatOpen) ? ' hidden' : '' ?>>Connectez-vous pour participer au salon. <a href="/login">Connexion</a></p>
                 <?php endif; ?>
             </div>
             <script>
@@ -59,7 +60,9 @@
                         </p>
                     <?php else: ?>
                         <?php foreach ($actus as $a): ?>
-                            <a href="<?= htmlspecialchars($a['link'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" class="actu-line">
+                            <?php $actuLink = \App\Service\NewsFeed::httpUrl((string) ($a['link'] ?? '')); ?>
+                            <?php if ($actuLink === null) { continue; } ?>
+                            <a href="<?= htmlspecialchars($actuLink, ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" class="actu-line">
                                 <div class="actu-title"><?= htmlspecialchars($a['title'], ENT_QUOTES, 'UTF-8') ?></div>
                                 <?php if ($a['date'] !== ''): ?>
                                     <div class="actu-date"><?= htmlspecialchars($a['date'], ENT_QUOTES, 'UTF-8') ?></div>
@@ -69,7 +72,6 @@
                     <?php endif; ?>
                 </div>
              </div>
-            <?php if (empty($hidePredictions)): ?>
                 <hr/>
                 <div class="predictions-box">
                     <h3>Prédictions</h3>
@@ -133,7 +135,6 @@
                         <p class="prediction-message">Aucune course n’est disponible pour les pronostics.</p>
                     <?php endif; ?>
                 </div>
-            <?php endif; ?>
         </div>
     </div>
 </div>

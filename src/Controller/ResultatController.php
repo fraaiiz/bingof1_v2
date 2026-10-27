@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ErrorPage;
 use App\Database\Database;
 use App\View\ViewRenderer;
 
@@ -9,9 +10,7 @@ class ResultatController {
 
     public function index(string $annee, string $id): void {
         if (!ctype_digit($id)) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
 
         $database = new Database();
@@ -30,9 +29,7 @@ class ResultatController {
         $course = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($course === false) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
 
         if ($course['is_cancelled'] === 'yes') {

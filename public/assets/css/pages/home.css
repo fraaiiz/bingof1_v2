@@ -122,19 +122,6 @@
     min-width: 0;
 }
 
-.home-card-right:not(:has(.predictions-box)) .webhook-box {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
-
-.home-card-right:not(:has(.predictions-box)) .actus-scroll {
-    flex: 1 1 auto;
-    max-height: none;
-    min-height: 0;
-}
-
 .predictions-box {
     flex: 1 1 auto;
     min-height: 0;
@@ -251,6 +238,11 @@
     width: 100%;
     display: flex;
     gap: 5px;
+}
+
+.chat-form[hidden],
+.chat-login[hidden] {
+    display: none !important;
 }
 
 .chat-form input[type="text"] {
@@ -453,10 +445,6 @@
 
     .actus-scroll {
         max-height: clamp(220px, 28vh, 480px);
-    }
-
-    .home-card-right:not(:has(.predictions-box)) .actus-scroll {
-        max-height: clamp(280px, 35vh, 560px);
     }
 }
 

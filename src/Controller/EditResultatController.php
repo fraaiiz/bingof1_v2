@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ErrorPage;
 use App\Database\Database;
 use App\Service\Csrf;
 use App\Service\RaceTime;
@@ -22,9 +23,7 @@ class EditResultatController
         $pdo = (new Database())->getConnection();
         $course = $this->findCourse($pdo, $annee, $id);
         if ($course === null) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
         if ($course['is_cancelled'] === 'yes') {
             http_response_code(410);
@@ -52,9 +51,7 @@ class EditResultatController
         $pdo = (new Database())->getConnection();
         $course = $this->findCourse($pdo, $annee, $id);
         if ($course === null) {
-            http_response_code(404);
-            echo '404 Not Found';
-            return;
+            ErrorPage::notFound();
         }
         if ($course['is_cancelled'] === 'yes') {
             http_response_code(410);

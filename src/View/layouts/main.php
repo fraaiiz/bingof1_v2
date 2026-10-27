@@ -6,7 +6,7 @@
     <meta name="author" content="Florian Teindas">
     <link rel="icon" href="/assets/images/favicon.ico"/>
     <title><?= htmlspecialchars($title ?? 'BingoF1') ?></title>
-    <?php $stylePage = ($page ?? '') === 'register' ? 'login' : ($page ?? ''); ?>
+    <?php $stylePage = in_array(($page ?? ''), ['register', 'password-request', 'password-choose'], true) ? 'login' : ($page ?? ''); ?>
     <?php $globalStylePath = __DIR__ . '/../../../public/assets/css/style.css'; ?>
     <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime($globalStylePath) ?>-<?= filesize($globalStylePath) ?>">
     <link rel="stylesheet" href="/assets/fonts/fonts.css">
@@ -91,7 +91,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 BingoF1. Tous droits réservés.</p>
+        <p>&copy; 2026 BingoF1. Tous droits réservés. <a href="/contact">Contact</a> · <a href="/cgu">CGU</a> · <a href="/devnotes">DevNotes</a></p>
     </footer>
     <script src="/assets/js/nav.js"></script>
 </body>

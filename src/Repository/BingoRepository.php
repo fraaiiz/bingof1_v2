@@ -37,7 +37,7 @@ class BingoRepository
     public function findPublicGrids(int $seasonId): array
     {
         $statement = $this->pdo->prepare(
-            'SELECT b.id, u.user_login, bc.position, bc.label, bc.validated
+            'SELECT b.id, b.user_id, u.user_login, bc.position, bc.label, bc.validated
             FROM bingos b
             INNER JOIN users u ON u.id = b.user_id
             LEFT JOIN bingo_cases bc ON bc.bingo_id = b.id
@@ -52,6 +52,7 @@ class BingoRepository
             if (!isset($grids[$bingoId])) {
                 $grids[$bingoId] = [
                     'id' => $bingoId,
+                    'user_id' => (int) $row['user_id'],
                     'user_login' => (string) $row['user_login'],
                     'cells' => $this->emptyCells(),
                 ];

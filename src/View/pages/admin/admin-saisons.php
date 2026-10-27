@@ -331,6 +331,6 @@ $formatDate = static function (?string $value): string {
                 <?php endif; ?>
             </div>
         </form>
-        <script src="/assets/js/admin-saisons.js?v=<?= filemtime(__DIR__ . '/../../../public/assets/js/admin-saisons.js') ?>" defer></script>
+        <script src="/assets/js/admin-saisons.js?v=<?= filemtime(__DIR__ . '/../../../../public/assets/js/admin-saisons.js') ?>" defer></script>
     <?php endif; ?>
 </section>

@@ -103,8 +103,8 @@ class NewsFeed
         $items = [];
         foreach ($rss->channel->item as $item) {
             $title = trim((string) $item->title);
-            $link = trim((string) $item->link);
-            if ($title === '' || $link === '') {
+            $link = self::httpUrl(trim((string) $item->link));
+            if ($title === '' || $link === null) {
                 continue;
             }
 
@@ -149,6 +149,7 @@ class NewsFeed
             return null;
         }
 
+        $items = [];
         foreach ($cache['items'] as $item) {
             if (!is_array($item)
                 || !is_string($item['title'] ?? null)
@@ -157,12 +158,36 @@ class NewsFeed
                 error_log('F1 news cache contains an invalid item.');
                 return null;
             }
+
+            $link = self::httpUrl($item['link']);
+            if ($link === null) {
+                continue;
+            }
+
+            $item['link'] = $link;
+            $items[] = $item;
         }
 
         return [
             'fetched_at' => $cache['fetched_at'],
-            'items' => $cache['items'],
+            'items' => $items,
         ];
+    }
+
+    public static function httpUrl(string $link): ?string
+    {
+        $parts = parse_url(trim($link));
+        if (!is_array($parts)) {
+            return null;
+        }
+
+        $scheme = strtolower((string) ($parts['scheme'] ?? ''));
+        $host = (string) ($parts['host'] ?? '');
+        if (!in_array($scheme, ['http', 'https'], true) || $host === '') {
+            return null;
+        }
+
+        return trim($link);
     }
 
     private function writeCache(array $items): void

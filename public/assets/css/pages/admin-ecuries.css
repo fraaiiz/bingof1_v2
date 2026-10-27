@@ -1,0 +1,311 @@
+.admin-ecuries {
+    width: min(100%, 1040px);
+    margin: 0 auto;
+    padding: 8px 0 24px;
+    text-align: left;
+}
+
+.admin-ecuries h1,
+.admin-ecuries h2 {
+    margin: 0;
+    text-align: center;
+}
+
+.admin-ecuries h1 {
+    font-size: 2rem;
+}
+
+.admin-ecuries-back {
+    margin: 0 0 16px;
+}
+
+.admin-ecuries-back a,
+.admin-ecuries-back-button {
+    color: #f6d9db;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.admin-ecuries-back a:hover,
+.admin-ecuries-back-button:hover {
+    text-decoration: underline;
+}
+
+.admin-ecuries-notice {
+    margin: 20px 0 0;
+    padding: 12px 14px;
+    border-radius: 8px;
+}
+
+.admin-ecuries-notice--success {
+    background: rgba(80, 140, 90, 0.25);
+    border: 1px solid rgba(170, 220, 170, 0.55);
+}
+
+.admin-ecuries-notice--error {
+    background: rgba(151, 0, 8, 0.28);
+    border: 1px solid rgba(255, 150, 150, 0.55);
+}
+
+.admin-team-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.admin-team-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.admin-team-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.admin-team-fields input,
+.admin-team-fields select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+    font-weight: 400;
+}
+
+.admin-team-actions,
+.admin-ecuries-confirm-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-ecuries button {
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #970008;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-ecuries button:hover {
+    background: #b80d17;
+}
+
+.admin-ecuries button:focus-visible,
+.admin-ecuries input:focus-visible,
+.admin-ecuries select:focus-visible,
+.admin-ecuries a:focus-visible {
+    outline: 2px solid #f2c66d;
+    outline-offset: 2px;
+}
+
+.admin-ecuries button.admin-ecuries-cancel {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.admin-ecuries button.admin-ecuries-cancel:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-ecuries-back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
+    color: #fff;
+}
+
+.admin-ecuries-back-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+}
+
+.admin-ecuries-table-wrap {
+    margin-top: 28px;
+    overflow-x: auto;
+}
+
+.admin-ecuries-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-ecuries-table th,
+.admin-ecuries-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.admin-ecuries-table th {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.admin-ecuries-table td:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-ecuries-table td:last-child form {
+    display: contents;
+}
+
+.admin-ecuries-table td:last-child a.admin-ecuries-open,
+.admin-ecuries-table td:last-child button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 9rem;
+}
+
+a.admin-ecuries-open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #970008;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+a.admin-ecuries-open:hover {
+    background: #b80d17;
+}
+
+.admin-ecuries-delete {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.admin-ecuries-current td {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.admin-ecuries-help,
+.admin-ecuries-empty {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 400;
+}
+
+.admin-ecuries-empty,
+.admin-team-form > .admin-ecuries-help {
+    margin-top: 0;
+}
+
+.admin-ecuries-empty {
+    margin-top: 16px;
+}
+
+.admin-ecuries-wide,
+.admin-ecuries-photo-preview {
+    grid-column: 1 / -1;
+}
+
+.admin-ecuries-thumb,
+.admin-ecuries-current,
+.admin-ecuries-photo-preview img {
+    object-fit: contain;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.admin-ecuries-thumb {
+    width: 72px;
+    height: 36px;
+}
+
+.admin-ecuries-current,
+.admin-ecuries-photo-preview img {
+    width: 180px;
+    height: 72px;
+}
+
+.admin-ecuries-photo-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-ecuries-photo-preview[hidden] {
+    display: none;
+}
+
+.admin-ecuries-entry-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.admin-ecuries-confirm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+
+.admin-ecuries-confirm p,
+.admin-ecuries-usage {
+    margin: 0;
+}
+
+.admin-ecuries-usage {
+    padding-left: 1.2rem;
+}
+
+.admin-ecuries-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 700px) {
+    .admin-team-actions,
+    .admin-ecuries-confirm-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-team-actions button,
+    .admin-team-actions a,
+    .admin-ecuries-confirm-actions button {
+        width: 100%;
+    }
+}

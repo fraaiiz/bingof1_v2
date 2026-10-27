@@ -1,0 +1,308 @@
+.admin-users {
+    width: min(100%, 1040px);
+    margin: 0 auto;
+    padding: 8px 0 24px;
+    text-align: left;
+}
+
+.admin-users h1,
+.admin-users h2 {
+    margin: 0;
+    text-align: center;
+}
+
+.admin-users h1 {
+    font-size: 2rem;
+}
+
+.admin-users h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+}
+
+.admin-users-back {
+    margin: 0 0 16px;
+}
+
+.admin-users-back a {
+    color: #f6d9db;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.admin-users-back a:hover {
+    text-decoration: underline;
+}
+
+.admin-users-notice {
+    margin: 20px 0 0;
+    padding: 12px 14px;
+    border-radius: 8px;
+}
+
+.admin-users-notice--success {
+    background: rgba(80, 140, 90, 0.25);
+    border: 1px solid rgba(170, 220, 170, 0.55);
+}
+
+.admin-users-notice--error {
+    background: rgba(151, 0, 8, 0.28);
+    border: 1px solid rgba(255, 150, 150, 0.55);
+}
+
+.admin-user-form,
+.admin-users-activity {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.admin-user-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.admin-user-identity {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 0;
+}
+
+.admin-user-identity div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-user-identity dt {
+    font-weight: 700;
+}
+
+.admin-user-identity dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.admin-user-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.admin-user-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.admin-user-fields input,
+.admin-user-fields select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+    font-weight: 400;
+}
+
+.admin-user-actions,
+.admin-users-confirm-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-users button {
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #970008;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-users button:hover {
+    background: #b80d17;
+}
+
+.admin-users button:focus-visible,
+.admin-users input:focus-visible,
+.admin-users select:focus-visible,
+.admin-users a:focus-visible {
+    outline: 2px solid #f2c66d;
+    outline-offset: 2px;
+}
+
+.admin-users button.admin-users-cancel {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.admin-users button.admin-users-cancel:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-users-table-wrap {
+    margin-top: 28px;
+    overflow-x: auto;
+}
+
+.admin-users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-users-table th,
+.admin-users-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.admin-users-table th {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+a.admin-users-open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 9rem;
+    min-height: 44px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #970008;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+a.admin-users-open:hover {
+    background: #b80d17;
+}
+
+.admin-users-you {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.admin-users-delete {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.admin-users-help,
+.admin-users-empty {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 400;
+}
+
+.admin-users-activity a {
+    color: #f6d9db;
+    font-weight: 700;
+}
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.admin-users-feed {
+    padding-left: 0;
+    list-style: none;
+}
+
+.admin-users-feed li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0 0 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-users-message {
+    white-space: pre-wrap;
+}
+
+.admin-users-deleted {
+    align-self: flex-start;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.admin-users-activity li {
+    margin: 0 0 6px;
+    overflow-wrap: anywhere;
+}
+
+.admin-users-confirm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+
+.admin-users-confirm p,
+.admin-users-usage {
+    margin: 0;
+}
+
+.admin-users-usage {
+    padding-left: 1.2rem;
+}
+
+.admin-users-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 700px) {
+    .admin-user-actions,
+    .admin-users-confirm-actions,
+    .admin-users-delete {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-user-actions button,
+    .admin-users-confirm-actions button,
+    .admin-users-delete button,
+    a.admin-users-open {
+        width: 100%;
+    }
+}

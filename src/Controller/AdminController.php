@@ -21,7 +21,7 @@ class AdminController
         }
 
         $viewRenderer = new ViewRenderer();
-        $viewRenderer->render('View/pages/admin', [
+        $viewRenderer->render('View/pages/admin/admin', [
             'title' => 'BingoF1 - Administration',
         ]);
     }

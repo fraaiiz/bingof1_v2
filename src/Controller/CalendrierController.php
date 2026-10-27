@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Database\Database;
 use App\Repository\SeasonRepository;
+use App\Service\ErrorPage;
 use App\View\ViewRenderer;
 
 class CalendrierController {
@@ -11,6 +12,12 @@ class CalendrierController {
     public function index(string $annee) {
         $database = new Database();
         $pdo = $database->getConnection();
+        $seasonStatement = $pdo->prepare('SELECT id FROM saisons WHERE annee = :annee');
+        $seasonStatement->execute([':annee' => $annee]);
+        if ($seasonStatement->fetchColumn() === false) {
+            ErrorPage::notFound();
+        }
+
         $stmt = $pdo->prepare(
             'SELECT courses.*,
                 circuits.pays AS circuit_pays,
@@ -74,9 +81,7 @@ class CalendrierController {
     public function redirectToDefaultSeason(): void {
         $seasonYear = (new SeasonRepository((new Database())->getConnection()))->findDefaultYear();
         if ($seasonYear === null) {
-            http_response_code(404);
-            echo 'Aucune saison n’est disponible.';
-            return;
+            ErrorPage::notFound();
         }
 
         header('Location: /saisons/' . rawurlencode((string) $seasonYear) . '/calendrier');

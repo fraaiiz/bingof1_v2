@@ -4,8 +4,8 @@ $adminGroups = [
         'title' => 'Championnat',
         'actions' => [
             ['href' => '/admin/saisons', 'label' => 'Saisons'],
-            ['href' => '/admin/pilotes', 'label' => 'Pilotes'],
             ['href' => '/admin/ecuries', 'label' => 'Écuries'],
+            ['href' => '/admin/pilotes', 'label' => 'Pilotes'],
         ],
     ],
     [
