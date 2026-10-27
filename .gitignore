@@ -21,3 +21,6 @@ coverage/
 
 # Uploaded files (if applicable)
 public/uploads/
+
+# Schéma local, hors dépôt
+database/migrations/
